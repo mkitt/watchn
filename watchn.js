@@ -5,6 +5,8 @@ var watchn = require('watchn'),
 
 watchn.help();
 
-watchn.watch(__dirname + '/test/helpers', function(curr, prev) {
-  sys.debug(curr.mtime + ' => ' + prev.mtime);
+watchn.watch(__dirname + '/test/helpers', function (curr, prev) {
+  if (curr.mtime !== prev.mtime) {
+    sys.debug(curr.mtime + ' => ' + prev.mtime);
+  }
 });
