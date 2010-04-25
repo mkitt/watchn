@@ -3,7 +3,7 @@
   var fs = require('fs'),
       assert = require('assert'),
       sys = require('sys'),
-      reporter = require('./reporter'),
+      reporter = require('reporter'),
       watchn = require('watchn'),
       comment = '// Do not edit. File is overwritten for unit tests! => ';
 
