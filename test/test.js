@@ -72,12 +72,68 @@
     });
   }
   
+  function should_error_on_missing_env_for_action() {
+    try {
+      assert.throws(function () {
+        watchn.action();
+      });
+      reporter.log(true);
+    } catch (e) {
+      reporter.log(false, 'should_error_on_missing_env_for_action => ' + e);
+    }
+    reporter.next();
+  }
+  
+  function should_error_on_missing_program_for_action() {
+    try {
+      assert.throws(function () {
+        watchn.action({env: 'node'});
+      });
+      reporter.log(true);
+    } catch (e) {
+      reporter.log(false, 'should_error_on_missing_program_for_action => ' + e);
+    }
+    reporter.next();
+  }
+  
+  function should_run_node_program() {
+    try {
+      watchn.action({env: 'node', 
+                    program: __dirname + '/helpers/noder.js',
+                    exit: function (code) {
+                      assert.equal(code, 0);
+                    }});
+      reporter.log(true);
+    } catch (e) {
+      reporter.log(false, 'should_run_node_program => ' + e);
+    }
+    reporter.next();
+  }
+  
+  function should_run_ruby_program() {
+    try {
+      watchn.action({env: 'ruby', 
+                    program: __dirname + '/helpers/ruby.rb',
+                    exit: function (code) {
+                      assert.equal(code, 0);
+                    }});
+      reporter.log(true);
+    } catch (e) {
+      reporter.log(false, 'should_run_ruby_program => ' + e);
+    }
+    reporter.next();
+  }
+  
 // ----------------------------------------------------------------------------
   
   reporter.start([
     should_notify_generic_message,
     should_watch_file_for_change,
-    should_watch_dirs_for_changes
+    should_watch_dirs_for_changes,
+    should_error_on_missing_env_for_action,
+    should_error_on_missing_program_for_action,
+    should_run_node_program,
+    should_run_ruby_program
   ]);
   
 }());

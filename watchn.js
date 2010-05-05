@@ -7,8 +7,7 @@
   watchn.help();
   
   watchn.watch(__dirname + '/lib', function (curr, prev) {
-    // watchn.action('ruby', __dirname + '/ruby.rb');
-    watchn.action('node', __dirname + '/test/test.js');
+    watchn.action({env: 'node', program: __dirname + '/test/test.js'});
   });  
   
 }());
