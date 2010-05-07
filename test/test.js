@@ -40,6 +40,27 @@
       }
     });
   }
+  
+  function should_unwatch_single_file() {
+    var helper = __dirname + '/helpers/helper.js';
+    
+    watchn.watch(helper, function (curr, prev, file) {});
+    try {
+      assert.equal(watchn.watched.length, 1);
+      reporter.log(true);
+    } catch (e) {
+      reporter.log(false, 'should_unwatch_single_file => ' + e);
+    }
+    
+    watchn.unwatch(helper);
+    try {
+      assert.equal(watchn.watched.length, 0);
+      reporter.log(true);
+    } catch (ee) {
+      reporter.log(false, 'should_unwatch_single_file => ' + ee);
+    }
+    reporter.next();
+  }
 
   function should_watch_dirs_for_changes() {
     var files = [],
@@ -70,6 +91,48 @@
         throw err;
       }
     });
+  }
+  
+  function should_unwatch_directory() {
+    var helpers = __dirname + '/helpers/nested';
+    
+    watchn.watch(helpers, function (curr, prev, file) {});
+    try {
+      assert.equal(watchn.watched.length, 3);
+      reporter.log(true);
+    } catch (e) {
+      reporter.log(false, 'should_unwatch_directory => ' + e);
+    }
+    
+    watchn.unwatch(helpers);
+    try {
+      assert.equal(watchn.watched.length, 0);
+      reporter.log(true);
+    } catch (ee) {
+      reporter.log(false, 'should_unwatch_directory => ' + ee);
+    }
+    reporter.next();
+  }
+  
+  function should_kill_all_watched_files() {
+    var helpers = __dirname + '/helpers/nested';
+    
+    watchn.watch(helpers, function (curr, prev, file) {});
+    try {
+      assert.equal(watchn.watched.length, 3);
+      reporter.log(true);
+    } catch (e) {
+      reporter.log(false, 'should_kill_all_watched_files => ' + e);
+    }
+    
+    watchn.kill();
+    try {
+      assert.equal(watchn.watched.length, 0);
+      reporter.log(true);
+    } catch (ee) {
+      reporter.log(false, 'should_kill_all_watched_files => ' + ee);
+    }
+    reporter.next();
   }
   
   function should_error_on_missing_env_for_action() {
@@ -129,7 +192,10 @@
   reporter.start([
     should_notify_generic_message,
     should_watch_file_for_change,
+    should_unwatch_single_file,
     should_watch_dirs_for_changes,
+    should_unwatch_directory,
+    should_kill_all_watched_files,
     should_error_on_missing_env_for_action,
     should_error_on_missing_program_for_action,
     should_run_node_program,
