@@ -9,17 +9,25 @@
   }
   
   function onTestComplete(code, monitor) {
-    sys.debug('--- onTestComplete ---');
+    sys.puts('--- onTestComplete ---');
   }
   
   function watch() {
-    var test = __dirname + '/test/test.js';
-    watchn.watch(__dirname + '/lib', function (curr, prev) {
-      watchn.action({env: 'node', program: test, stdout: onTestProgress, exit: onTestComplete});
+    var testfile = __dirname + '/test/test.js',
+        testprog = {env: 'node', program: testfile, stdout: onTestProgress, exit: onTestComplete};
+    
+    watchn.initialize();
+    
+    watchn.watch(testfile, function (curr, prev) {
+      watchn.action(testprog);
     });
+    
+    watchn.watch(__dirname + '/lib', function (curr, prev) {
+      watchn.action(testprog);
+    });
+    
   }
   
-  watchn.help();
   watch();
   
 }());
