@@ -2,22 +2,24 @@
 (function () {
   require.paths.push('./lib');
   var watchn = require('watchn'),
-      sys = require('sys'),
-      log = '';
+      sys = require('sys');
   
   function onTestProgress(data) {
-    log = data;
     sys.print(data);
   }
   
   function onTestComplete(code, monitor) {
-    sys.debug('Log is ' + log);
+    sys.debug('--- onTestComplete ---');
+  }
+  
+  function watch() {
+    var test = __dirname + '/test/test.js';
+    watchn.watch(__dirname + '/lib', function (curr, prev) {
+      watchn.action({env: 'node', program: test, stdout: onTestProgress, exit: onTestComplete});
+    });
   }
   
   watchn.help();
-  
-  watchn.watch(__dirname + '/lib', function (curr, prev) {
-    watchn.action({env: 'node', program: __dirname + '/test/test.js', stdout: onTestProgress, exit: onTestComplete});
-  });
+  watch();
   
 }());
