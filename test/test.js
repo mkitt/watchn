@@ -1,3 +1,4 @@
+
 (function () {
   require.paths.push('./lib');
   var fs = require('fs'),

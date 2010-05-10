@@ -9,7 +9,7 @@
   }
   
   function onTestComplete(code, monitor) {
-    sys.puts('--- onTestComplete ---');
+    sys.puts('----------');
   }
   
   function watch() {
