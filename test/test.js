@@ -95,11 +95,12 @@
   }
   
   function should_unwatch_directory() {
-    var helpers = __dirname + '/helpers/nested';
+    var helpers = __dirname + '/helpers/nested',
+        globlen = watchn.globbed(helpers).length;
     
     watchn.watch(helpers, function (curr, prev, file) {});
     try {
-      assert.equal(watchn.watched.length, 3);
+      assert.equal(watchn.watched.length, globlen);
       reporter.log(true);
     } catch (e) {
       reporter.log(false, 'should_unwatch_directory => ' + e);
@@ -116,11 +117,12 @@
   }
   
   function should_kill_all_watched_files() {
-    var helpers = __dirname + '/helpers/nested';
+    var helpers = __dirname + '/helpers/nested',
+        globlen = watchn.globbed(helpers).length;
     
     watchn.watch(helpers, function (curr, prev, file) {});
     try {
-      assert.equal(watchn.watched.length, 3);
+      assert.equal(watchn.watched.length, globlen);
       reporter.log(true);
     } catch (e) {
       reporter.log(false, 'should_kill_all_watched_files => ' + e);
@@ -188,6 +190,34 @@
     reporter.next();
   }
   
+  function should_watch_new_file_added() {
+    var helpers = __dirname + '/helpers/nested',
+        globlen = watchn.globbed(helpers).length,
+        added = __dirname + '/helpers/nested/temp_helper.js';
+        
+    watchn.watch(helpers, function (curr, prev, file) {});
+    try {
+      assert.equal(watchn.watched.length, globlen);
+      reporter.log(true);
+    } catch (e) {
+      reporter.log(false, 'should_watch_new_file_added => ' + e);
+    }
+    
+    fs.openSync(added, 'w+', 0755);
+    
+    try {
+      assert.equal(watchn.watched.length, globlen + 1);
+      reporter.log(true);
+    } catch (ee) {
+      reporter.log(false, 'should_watch_new_file_added => ' + ee);
+    }
+    
+    fs.unlinkSync(added);
+    
+    watchn.kill();
+    reporter.next();
+  }
+  
 // ----------------------------------------------------------------------------
   
   reporter.start([
@@ -200,7 +230,8 @@
     should_error_on_missing_env_for_action,
     should_error_on_missing_program_for_action,
     should_run_node_program,
-    should_run_ruby_program
+    should_run_ruby_program,
+    should_watch_new_file_added
   ]);
   
 }());

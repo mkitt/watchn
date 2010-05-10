@@ -15,6 +15,7 @@ For more descriptions, please read the test cases in `./test/test.js`
 
 * If a file has been deleted, need to remove it from the list
 * Refactor naming scheme?
+* If a file is added, needs to be added to the watchn queue
 * Kill switch?
 * Refactor dirty glob methods => include options for filtering files or file types in a directory
 * Add shell support
