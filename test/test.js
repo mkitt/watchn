@@ -10,18 +10,6 @@
 
 // ----------------------------------------------------------------------------
 
-  function should_notify_generic_message() {
-    watchn.notify('message', function (msg) {
-      try {
-        assert.equal('message', msg);
-        reporter.log(true);
-      } catch (e) {
-        reporter.log(false, 'should_notify_generic_message => ' + e);
-      }
-    });
-    reporter.next();
-  }
-
   function should_watch_file_for_change() {
     var helper = __dirname + '/helpers/helper.js';
     
@@ -267,7 +255,6 @@
 // ----------------------------------------------------------------------------
   
   reporter.start([
-    should_notify_generic_message,
     should_watch_file_for_change,
     should_unwatch_single_file,
     should_watch_dirs_for_changes,
