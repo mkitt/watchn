@@ -234,4 +234,4 @@
     should_watch_new_file_added
   ]);
   
-}());
+}());//

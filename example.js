@@ -16,7 +16,7 @@
     var testfile = __dirname + '/test/test.js',
         testprog = {env: 'node', program: testfile, stdout: onTestProgress, exit: onTestComplete};
     
-    watchn.initialize();
+    watchn.initialize(watch);
     
     watchn.watch(testfile, function (curr, prev) {
       watchn.action(testprog);

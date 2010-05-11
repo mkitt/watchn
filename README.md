@@ -13,13 +13,14 @@ For more descriptions, please read the test cases in `./test/test.js`
   
 ### TODO ###
 
-* If a file has been deleted, need to remove it from the list
-* Refactor naming scheme?
 * If a file is added, needs to be added to the watchn queue
+* If a file has been deleted, need to remove it from the list
+* Key command to force a refresh
+* Refactor naming scheme?
 * Kill switch?
-* Refactor dirty glob methods => include options for filtering files or file types in a directory
 * Add shell support
-* Add examples => include usage with growl summary support
 * Add man page
+* Add examples => include usage with growl summary support
 * Update github wiki
+* Refactor dirty glob methods => include options for filtering files or file types in a directory
 * Peer review
