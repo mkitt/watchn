@@ -1,9 +1,8 @@
 ### TODO ###
 
-* Rewrite the tests to be a little more modular
-* Setup and teardown methods as well for general use cases
 * Refactor naming
 * Address the todo items
+* The initialization for watchn is kind of bothersome, need to figure out the best way to rework this
 * Kill switch?
 * Add shell support
 * Revisit reloading and when and how this happens

@@ -8,6 +8,15 @@
       watchn = require('watchn'),
       comment = '// Do not edit. File is overwritten for unit tests! => ';
 
+  function noop() {}
+  
+  function beforeEach() {}
+  
+  function afterEach() {
+    watchn.kill();
+    reporter.next();
+  }
+  
 // ----------------------------------------------------------------------------
 
   function should_watch_file_for_change() {
@@ -20,8 +29,7 @@
       } catch (e) {
         reporter.log(false, 'should_watch_file_for_change => ' + e);
       }
-      watchn.kill();
-      reporter.next();
+      afterEach();
     });
     fs.writeFile(helper, comment + new Date(), function (err) {
       if (err) {
@@ -48,7 +56,7 @@
     } catch (ee) {
       reporter.log(false, 'should_unwatch_single_file => ' + ee);
     }
-    reporter.next();
+    afterEach();
   }
 
   function should_watch_dirs_for_changes() {
@@ -70,8 +78,7 @@
         });
 
       } else {
-        watchn.kill();
-        reporter.next();
+        afterEach();
       }
     });
     files = watchn.globbed(helpers);
@@ -101,7 +108,7 @@
     } catch (ee) {
       reporter.log(false, 'should_unwatch_directory => ' + ee);
     }
-    reporter.next();
+    afterEach();
   }
   
   function should_kill_all_watched_files() {
@@ -123,7 +130,7 @@
     } catch (ee) {
       reporter.log(false, 'should_kill_all_watched_files => ' + ee);
     }
-    reporter.next();
+    afterEach();
   }
   
   function should_error_on_missing_env_for_action() {
@@ -135,7 +142,7 @@
     } catch (e) {
       reporter.log(false, 'should_error_on_missing_env_for_action => ' + e);
     }
-    reporter.next();
+    afterEach();
   }
   
   function should_error_on_missing_program_for_action() {
@@ -147,45 +154,48 @@
     } catch (e) {
       reporter.log(false, 'should_error_on_missing_program_for_action => ' + e);
     }
-    reporter.next();
+    afterEach();
   }
   
   function should_run_node_program() {
+    var env = 'node',
+        prog = __dirname + '/helpers/noder.js',
+        exit = function (code) {
+          assert.equal(code, 0);
+        };
+        
     try {
-      watchn.action({env: 'node', 
-                    program: __dirname + '/helpers/noder.js',
-                    exit: function (code) {
-                      assert.equal(code, 0);
-                    }});
+      watchn.action({env: env, program: prog, exit: exit});
       reporter.log(true);
     } catch (e) {
       reporter.log(false, 'should_run_node_program => ' + e);
     }
-    reporter.next();
+    afterEach();
   }
   
   function should_run_ruby_program() {
+    var env = 'ruby',
+        prog = __dirname + '/helpers/ruby.rb',
+        exit = function (code) {
+          assert.equal(code, 0);
+        };
+        
     try {
-      watchn.action({env: 'ruby', 
-                    program: __dirname + '/helpers/ruby.rb',
-                    exit: function (code) {
-                      assert.equal(code, 0);
-                    }});
+      watchn.action({env: env, program: prog, exit: exit});
       reporter.log(true);
     } catch (e) {
       reporter.log(false, 'should_run_ruby_program => ' + e);
     }
-    reporter.next();
+    afterEach();
   }
   
   function should_watch_new_file_added() {
     var helpers = __dirname + '/helpers/nested',
         globlen = watchn.globbed(helpers).length,
-        added = __dirname + '/helpers/nested/temp_helper.js';
-    
-    function watchit() {
-      watchn.watch(helpers, function (curr, prev, file) {});
-    }
+        added = __dirname + '/helpers/nested/temp_helper.js',
+        watchit = function () {
+          watchn.watch(helpers, function (curr, prev, file) {});
+        };
     
     watchn.watch(helpers, function (curr, prev, file) {});
     try {
@@ -196,8 +206,8 @@
     }
     
     fs.openSync(added, 'w+');
-    watchn.reload(watchit);
     
+    watchn.reload(watchit);
     try {
       assert.equal(watchn.watched.length, globlen + 1);
       reporter.log(true);
@@ -206,19 +216,16 @@
     }
     
     fs.unlinkSync(added);
-    
-    watchn.kill();
-    reporter.next();
+    afterEach();
   }
   
   function should_watch_new_file_added_then_deleted() {
     var helpers = __dirname + '/helpers/nested',
         globlen = watchn.globbed(helpers).length,
-        added = __dirname + '/helpers/nested/temp_helper.js';
-    
-    function watchit() {
-      watchn.watch(helpers, function (curr, prev, file) {});
-    }
+        added = __dirname + '/helpers/nested/temp_helper.js',
+        watchit = function () {
+          watchn.watch(helpers, function (curr, prev, file) {});
+        };
     
     watchn.watch(helpers, function (curr, prev, file) {});
     try {
@@ -247,9 +254,7 @@
     } catch (eee) {
       reporter.log(false, 'should_watch_new_file_added_then_deleted => ' + eee);
     }
-    
-    watchn.kill();
-    reporter.next();
+    afterEach();
   }
   
 // ----------------------------------------------------------------------------
