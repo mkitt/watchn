@@ -1,6 +1,5 @@
 ### TODO ###
 
-* Capture terminal key to refresh
 * Rewrite the tests to be a little more modular
 * Setup and teardown methods as well for general use cases
 * Refactor naming
