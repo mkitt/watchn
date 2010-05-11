@@ -13,12 +13,14 @@ For more descriptions, please read the test cases in `./test/test.js`
   
 ### TODO ###
 
-* If a file is added, needs to be added to the watchn queue
-* If a file has been deleted, need to remove it from the list
-* Key command to force a refresh
-* Refactor naming scheme?
-* Kill switch?
+* Capture terminal key to refresh
+* Rewrite the tests to be a little more modular
+* Think of setup and teardown methods as well for general use cases
+* Refactor naming
+* Kill switch
+* Address the todo items
 * Add shell support
+* What happens when a file has more than 1 action?
 * Add man page
 * Add examples => include usage with growl summary support
 * Update github wiki

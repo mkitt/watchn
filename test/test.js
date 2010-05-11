@@ -194,7 +194,11 @@
     var helpers = __dirname + '/helpers/nested',
         globlen = watchn.globbed(helpers).length,
         added = __dirname + '/helpers/nested/temp_helper.js';
-        
+    
+    function watchit() {
+      watchn.watch(helpers, function (curr, prev, file) {});
+    }
+    
     watchn.watch(helpers, function (curr, prev, file) {});
     try {
       assert.equal(watchn.watched.length, globlen);
@@ -203,7 +207,8 @@
       reporter.log(false, 'should_watch_new_file_added => ' + e);
     }
     
-    fs.openSync(added, 'w+', 0755);
+    fs.openSync(added, 'w+');
+    watchn.reload(watchit);
     
     try {
       assert.equal(watchn.watched.length, globlen + 1);
@@ -213,6 +218,47 @@
     }
     
     fs.unlinkSync(added);
+    
+    watchn.kill();
+    reporter.next();
+  }
+  
+  function should_watch_new_file_added_then_deleted() {
+    var helpers = __dirname + '/helpers/nested',
+        globlen = watchn.globbed(helpers).length,
+        added = __dirname + '/helpers/nested/temp_helper.js';
+    
+    function watchit() {
+      watchn.watch(helpers, function (curr, prev, file) {});
+    }
+    
+    watchn.watch(helpers, function (curr, prev, file) {});
+    try {
+      assert.equal(watchn.watched.length, globlen);
+      reporter.log(true);
+    } catch (e) {
+      reporter.log(false, 'should_watch_new_file_added_then_deleted => ' + e);
+    }
+    
+    fs.openSync(added, 'w+');
+    
+    watchn.reload(watchit);
+    try {
+      assert.equal(watchn.watched.length, globlen + 1);
+      reporter.log(true);
+    } catch (ee) {
+      reporter.log(false, 'should_watch_new_file_added_then_deleted => ' + ee);
+    }
+    
+    fs.unlinkSync(added);
+    
+    watchn.reload(watchit);
+    try {
+      assert.equal(watchn.watched.length, globlen);
+      reporter.log(true);
+    } catch (eee) {
+      reporter.log(false, 'should_watch_new_file_added_then_deleted => ' + eee);
+    }
     
     watchn.kill();
     reporter.next();
@@ -231,7 +277,8 @@
     should_error_on_missing_program_for_action,
     should_run_node_program,
     should_run_ruby_program,
-    should_watch_new_file_added
+    should_watch_new_file_added,
+    should_watch_new_file_added_then_deleted
   ]);
   
-}());//
+}());
