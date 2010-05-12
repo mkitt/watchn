@@ -19,6 +19,16 @@
   
 // ----------------------------------------------------------------------------
 
+  function should_do_something_simple() {
+    try {
+      assert.equal(true, true);
+      reporter.log(true);
+    } catch (e) {
+      reporter.log(false, 'should_do_something_simple => ' + e);
+    }
+    afterEach();
+  }
+  
   function should_watch_file_for_change() {
     var helper = __dirname + '/helpers/helper.js';
     
@@ -260,6 +270,7 @@
 // ----------------------------------------------------------------------------
   
   reporter.start([
+    should_do_something_simple,
     should_watch_file_for_change,
     should_unwatch_single_file,
     should_watch_dirs_for_changes,
