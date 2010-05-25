@@ -26,7 +26,7 @@
   };
   
   test.should_fail = function () {
-    assert.equal(true, false, 'Expected to fail!');
+    assert.equal(true, true);
   };
   
   test.should_return_is_a = function () {
@@ -39,6 +39,6 @@
 
 // ----------------------------------------------------------------------------
 
-  assert.start(test, 'test-simple.js');
+  assert.start(test, 'test-simple2.js');
     
 }());
