@@ -2,6 +2,7 @@
 (function () {
   require.paths.push('./lib');
   var watchn = require('watchn'),
+      fs = require('fs'),
       sys = require('sys'),
       params = process.argv.splice(2);
 
@@ -12,13 +13,13 @@
   }
   
   function onTestComplete(code, monitor) {
-    sys.puts('----------');
+    sys.puts('---------- Exited with Code: ' + code + ' ----------');
   }
 
 // ----------------------------------------------------------------------------
   
   function watch() {
-    var testfile = __dirname + '/test/test.js',
+    var testfile = './examples/test/test-simple.js',
         testprog = {env: 'node', 
                     program: testfile, 
                     stdout: onTestProgress, 
@@ -26,29 +27,17 @@
     
     watchn.initialize(watch);
     
-    watchn.watch(testfile, function (curr, prev) {
+    watchn.watch(testfile, function (curr, prev, file) {
       watchn.action(testprog);
     });
-    
-    watchn.watch(__dirname + '/lib', function (curr, prev) {
+        
+    watchn.watch('./examples/lib', function (curr, prev, file) {
       watchn.action(testprog);
     });
-    
+        
   }
   
-// ----------------------------------------------------------------------------  
-
-  // todo: this should be refactored into the watchn module
-  if (params.length > 0) {
-    params.forEach(function (param) {
-      if (param === 'help' || param === '--help' || param === '-h') {
-        watchn.help();
-      }
-    });
-    
-  } else {
-    watch();
-  }
+  watch();
   
 // ----------------------------------------------------------------------------  
 
