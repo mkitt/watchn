@@ -10,6 +10,7 @@ To see a basic working example:
 * Save the file you modified and it will auto run the test for that file, if it passes it will invoke `./examples/test/runner.js` to run the full suite
 
 To run the test case on `watchn.js`:
+
 * In Terminal: `$ node test/test.js`
 
 This test will take awhile as it's writing files and watching files within `./test/helpers/`
