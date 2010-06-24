@@ -26,7 +26,7 @@
   };
   
   test.should_fail = function () {
-    assert.equal(true, false, 'Expected to fail!');
+    assert.equal(true, true, 'Expected to fail!');
   };
   
   test.should_return_is_a = function () {

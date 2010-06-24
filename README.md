@@ -16,21 +16,25 @@ This test will take awhile as it's writing files and watching files within `./te
 
 For more descriptions, please read the tests in `./test/test.js`
 
-### TODO ###
+## todo ##
 
+* Simplify the initialization process... not sure this is needed?
 * Add definitions around configuration
-* Add callback to action or an options args?
-* Add options args to watch?
-* Add the ability to abort a callback's callback on a failed exit
-* There's probably a more efficient way to chain callbacks
-* Write and watch a log file for size changes
-* Revisit reloading and when and how this happens? [nodules](http://github.com/kriszyp/nodules)?
-* What happens when a file has more than 1 action? Does it need priority?
-* Refactor dirty glob methods => include options for filtering files or file types in a directory
-* Add rules for files in a directory
+* Revisit reloading and when and how this happens? [nodules][nodules]?
 * Bring back shell support
 * Address the todo items within `./lib/watchn.js`
+
+* Add the ability for a file to have multiple actions attached to it
+  * Going to need to allow multiple child processes to be spawned
+  * Child process will need to clear themselves responsibly
+* Refactor dirty glob methods
+  * Include options for filtering files or file types within a directory
+* Add rules for files in a directory
+* Add growl support in examples
 * Add man page
 * Add examples and default watchn.js
 * Update github wiki
 * Peer review
+
+
+[nodules]: http://github.com/kriszyp/nodules
