@@ -20,11 +20,9 @@ For more descriptions, please read the tests in `./test/test.js`
 ## todo ##
 
 * Simplify the initialization process... not sure this is needed?
-* Add definitions around configuration
 * Revisit reloading and when and how this happens? [nodules][nodules]?
 * Bring back shell support
 * Address the todo items within `./lib/watchn.js`
-
 * Add the ability for a file to have multiple actions attached to it
   * Going to need to allow multiple child processes to be spawned
   * Child process will need to clear themselves responsibly
