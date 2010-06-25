@@ -33,7 +33,7 @@ For more descriptions, please read the tests in `./test/test.js`
 * Add man page
 * Add examples and default watchn.js
 * Update github wiki
-* Peer review
+* Peer reviews
 
 
 [nodules]: http://github.com/kriszyp/nodules
