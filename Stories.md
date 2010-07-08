@@ -1,3 +1,5 @@
+Notes and stories around the refactor
+
 ## Terminology ##
 
 * **Directory Rules**: Action(s) applied to files within a directory or subdirectories
