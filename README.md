@@ -19,17 +19,17 @@ For more descriptions, please read the tests in `./test/test.js`
 
 ## todo ##
 
-* What happens if we just watch a directory? 
+* Refactor based on the stories
+* Add watchn to directories and not just files within a directory (see story)
 * Revisit reloading and when and how this happens? [nodules][nodules]?
 * Clean and simplify
-* Simplify the initialization process... not sure this is needed?
 * Address the todo items within `./lib/watchn.js`
+* Refactor the ./examples/example.js to support "rules"
 * Bring back shell support
 * Refactor dirty glob methods
   * Include options for filtering files or file types within a directory
 * Add rules for files in a directory
 * Add growl support in examples
-* Refactor the ./examples/example.js to support "rules"
 * Add examples and default watchn.js
 * Add man page
 * Update github wiki and gh-pages
