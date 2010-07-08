@@ -1,13 +1,10 @@
-Wed Jun 23 2010 19:55:41 GMT-0600 (MDT)
-[32mFinished in 0 seconds
-14 tests, 14 assertions, 0 failures[0m
-Wed Jun 23 2010 20:10:27 GMT-0600 (MDT)
-Wed Jun 23 2010 20:10:32 GMT-0600 (MDT)
-Wed Jun 23 2010 20:11:02 GMT-0600 (MDT)
-Wed Jun 23 2010 20:12:07 GMT-0600 (MDT)
-Wed Jun 23 2010 20:12:07 GMT-0600 (MDT)
-Wed Jun 23 2010 20:12:57 GMT-0600 (MDT)
-Wed Jun 23 2010 20:12:57 GMT-0600 (MDT)
-Wed Jun 23 2010 20:23:06 GMT-0600 (MDT)
-[32mFinished in 0 seconds
-14 tests, 14 assertions, 0 failures[0m
+Wed Jul 07 2010 20:42:24 GMT-0600 (MDT)
+
+
+[32mFinished in 20.024 seconds
+11 tests, 19 assertions, 0 failures[0m
+Wed Jul 07 2010 20:43:04 GMT-0600 (MDT)
+[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m
+
+[32mFinished in 20.042 seconds
+11 tests, 19 assertions, 0 failures[0m

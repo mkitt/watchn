@@ -19,20 +19,20 @@ For more descriptions, please read the tests in `./test/test.js`
 
 ## todo ##
 
-* Simplify the initialization process... not sure this is needed?
+* What happens if we just watch a directory? 
 * Revisit reloading and when and how this happens? [nodules][nodules]?
-* Bring back shell support
+* Clean and simplify
+* Simplify the initialization process... not sure this is needed?
 * Address the todo items within `./lib/watchn.js`
-* Add the ability for a file to have multiple actions attached to it
-  * Going to need to allow multiple child processes to be spawned
-  * Child process will need to clear themselves responsibly
+* Bring back shell support
 * Refactor dirty glob methods
   * Include options for filtering files or file types within a directory
 * Add rules for files in a directory
 * Add growl support in examples
-* Add man page
+* Refactor the ./examples/example.js to support "rules"
 * Add examples and default watchn.js
-* Update github wiki
+* Add man page
+* Update github wiki and gh-pages
 * Peer reviews
 
 

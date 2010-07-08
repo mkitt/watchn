@@ -148,6 +148,36 @@
     assert.equal(watchn.watched.length, globlen);
   };
   
+  it.should_watch_same_file_with_separate_actions = function () {
+    var helper = __dirname + '/helpers/helper.js',
+        env = 'node',
+        prog = __dirname + '/helpers/noder.js',
+        count = 0;
+    
+    watchn.watch(helper, function (curr, prev) {
+      watchn.action({env: env, program: prog, exit: function (code) {
+        count += 1;
+        assert.equal(code, 0, null, true);
+      }});  
+    });
+    
+    watchn.watch(helper, function (curr, prev) {  
+      setTimeout(function () {
+        watchn.action({env: env, program: prog, exit: function (code) {
+          count += 1;
+          assert.equal(code, 0, null, true);
+          assert.equal(count, 2);
+        }});
+      }, 100);
+    });
+    
+    fs.writeFile(helper, comment + new Date(), function (err) {
+      if (err) {
+        throw err;
+      }
+    });
+  };
+  
 // ----------------------------------------------------------------------------  
   assert.start(it, 'test.js');
 
