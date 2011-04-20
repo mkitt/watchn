@@ -1,0 +1,13 @@
+{
+    "name": "watchn"
+  , "version": "0.0.5"
+  , "description": "Intelligently auto execute targets on file/directory changes"
+  , "keywords": []
+  , "author": "Matthew Kitt <mk.kitt@gmail.com> (http://mkitt.net/)"
+  , "homepage": "http://github.com/mkitt/watchn"
+  , "repository": { "type" : "git", "url" : "http://github.com/mkitt/watchn.git" }
+  , "dependencies": {}
+  , "main": "index"
+  , "engines": { "node": "0.4.x" }
+}
+
