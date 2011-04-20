@@ -1,39 +1,32 @@
-## watchn ##
 
-Work in progress. Still a bunch todo.
+# watchn
 
-To see a basic working example:
+Intelligently auto execute targets on file/directory changes.
 
-* In Terminal: `$ node examples/example.js`
-* Modify a line in `./examples/test/test-simple1.js` or `./examples/test/test-simple2.js`
-* Modify a line in `./examples/example.js` to force the process to reload
-* Save the file you modified and it will auto run the test for that file, if it passes it will invoke `./examples/test/runner.js` to run the full suite
-
-To run the test case on `watchn.js`:
-
-* In Terminal: `$ node test/test.js`
-
-This test will take awhile as it's writing files and watching files within `./test/helpers/`
-
-For more descriptions, please read the tests in `./test/test.js`
-
-## todo ##
-
-* Refactor based on the stories
-* Add watchn to directories and not just files within a directory (see story)
-* Revisit reloading and when and how this happens? [nodules][nodules]?
-* Clean and simplify
-* Address the todo items within `./lib/watchn.js`
-* Refactor the ./examples/example.js to support "rules"
-* Bring back shell support
-* Refactor dirty glob methods
-  * Include options for filtering files or file types within a directory
-* Add rules for files in a directory
-* Add growl support in examples
-* Add examples and default watchn.js
-* Add man page
-* Update github wiki and gh-pages
-* Peer reviews
+Large refactor and testing currently in process. Currently not published to `npm`, but coming shortly. Check out the demo and tests for the time being.
 
 
-[nodules]: http://github.com/kriszyp/nodules
+## License
+
+(The MIT License)
+
+Copyright (c) 2011 Matthew Kitt &lt;mk.kitt@gmail.com&gt;
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+'Software'), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
