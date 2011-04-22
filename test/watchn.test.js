@@ -18,15 +18,11 @@ function before() {
 
 
 module.exports = {
-  'test .version': function() {
-    before();
-    assert.match(watcher.version, /^\d+\.\d+\.\d+$/);
-  },
 
   'test #constructor': function() {
     before();
     assert.eql(watcher.watched.length, 0);
-    assert.eql(watcher.started, false);
+    assert.eql(watcher.rules.length, 0);
   },
 
   'test #watch throws errors on missing args': function() {
@@ -55,6 +51,13 @@ module.exports = {
     assert.eql(watcher.watched.length, 2);
     assert.includes(watcher.watched, __filename);
     assert.includes(watcher.watched, fixtures);
+  },
+
+  'test #xwatch is a noop method': function() {
+    before();
+    watcher.xwatch('test', [fixtures, __filename], function(){});
+    assert.eql(watcher.watched.length, 0);
+    assert.eql(watcher.rules.length, 0);
   },
 
   'test #unwatch without args': function() {
@@ -224,6 +227,7 @@ module.exports = {
     assert.eql(watcher.watched.length, 0);
     watcher.testenv = false;
     watcher.dispose();
+    process.exit(0);
   }
 };
 
