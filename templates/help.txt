@@ -13,8 +13,11 @@ Options [optional]:
   -s, --silent                Quiet watchn except for errors
   -r, --runner <name>         Basic stub for a new runner file
   -t, --template <name>       Generate a watchn.watch method for a program type
+  -l, --list-templates        List available template arguments for generation
 
 Examples:
   watchn watchnrunner.js      Starts watchn with a runner file
   watchn -s watchnrunner.js   Starts watchn in quiet mode with a runner file
   watchn -r watchnrunner.js   Generates a default runner file
+  watchn -t stylus            Generates a watch method for the stylus library
+  watchn -l                   Lists available templates for various libraries
