@@ -3,7 +3,7 @@
 
 Intelligently and continuously auto execute targets on file/directory changes. File watching on steroids.
 
-Currently in active development and testing. Full documentation and use case studies coming soon.
+Currently in active development and testing. Full documentation and use case studies coming soon. For the time being see `examples/demo.js` for implementing a watchn runner. There is also quite a bit of information listed in `test/watchn.test.js`
 
 
 ## Installation
