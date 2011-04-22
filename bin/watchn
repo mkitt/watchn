@@ -1,0 +1,83 @@
+#!/usr/bin/env node
+
+var fs = require('fs');
+var path = require('path');
+var Watchn = require('../lib/watchn');
+var argv = process.argv.slice(2)
+var npm = __dirname + '/../package.json';
+var templates = __dirname + '/../templates/';
+var silent = false;
+var state = 'started..';
+var file;
+var watcher;
+var runner;
+
+
+function notify(msg) {
+  if (!silent) {
+    console.log(msg);
+  }
+}
+
+function abort(msg) {
+  console.error(msg);
+  process.exit(1);
+}
+
+function load(args) {
+  while (args.length) {
+    var arg = args.shift();
+    switch (arg) {
+      case '-h':
+      case '--help':
+        abort(fs.readFileSync(templates + 'help.txt', 'utf8'));
+        break;
+      case '-v':
+      case '--version':
+        abort(JSON.parse(fs.readFileSync(npm, 'utf8')).version);
+        break;
+      case '-s':
+      case '--silent':
+        silent = true;
+        break;
+      default:
+        file = path.join(process.cwd(), arg);
+        break;
+    }
+  }
+  if (!file) {
+    var msg = 'Error:';
+    msg += '\n  watchn requires a runner file';
+    msg += '\n  run "watchn --help" for more information';
+    abort(msg);
+  }
+  watcher = null;
+  runner = null;
+  watcher = new Watchn(silent);
+  notify('watchn has ' + state);
+  runner = require(file);
+  runner.init(watcher);
+
+  /* fs.watchFile(file, {persistent: true, interval: 50}, function (curr, prev) {
+    if (curr.mtime > prev.mtime) {
+      reload();
+    }
+  }); */
+}
+
+/*
+function reload() {
+  try {
+    watcher.dispose();
+    notify('..thanks for watchn');
+  } catch (err) {}
+  fs.unwatchFile(file)
+  load(argv.slice());
+}
+ */
+
+load(argv.slice());
+state = 'reloaded..';
+
+// Reloading no worky because modules are cached. Probably need to run in a child process
+

@@ -1,0 +1,20 @@
+
+Intelligently auto execute targets on file/directory changes
+
+Usage:
+  watchn [options] <program>
+
+Program <required>:
+  <program>                   The runner program to respond to watched items
+
+Options [optional]:
+  -h, --help                  Output help information
+  -v, --version               Output the current version
+  -s, --silent                Quiet watchn except for errors
+  -r, --runner <name>         Basic stub for a new runner file
+  -t, --template <name>       Generate a watchn.watch method for a program type
+
+Examples:
+  watchn watchnrunner.js      Starts watchn with a runner file
+  watchn -s watchnrunner.js   Starts watchn in quiet mode with a runner file
+  watchn -r watchnrunner.js   Generates a default runner file
