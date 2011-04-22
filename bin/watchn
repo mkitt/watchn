@@ -24,6 +24,35 @@ function abort(msg) {
   process.exit(1);
 }
 
+function runner(name) {
+  var tmpl = templates + 'runner.js';
+  var out = path.normalize(process.cwd() + '/' + name);
+  fs.writeFileSync(out, fs.readFileSync(tmpl, 'utf8'));
+  return 'generated: ' + out;
+}
+
+function list() {
+  var msg = 'Available Templates:';
+  fs.readdirSync(templates).forEach(function (item) {
+    if (item !== 'runner.js' && item !== 'help.txt')
+      msg += '\n  ' + path.basename(item, '.js');
+  });
+  return msg;
+}
+
+function template(name) {
+  var tmpl = templates + name + '.js';
+  var msg = '';
+  try {
+    msg = fs.readFileSync(tmpl, 'utf8');
+  } catch (err) {
+    msg += 'Error:';
+    msg += '\n  template "' + name + '" not found';
+    msg += '\n  run "watchn --list-templates" for available templates';
+  }
+  return msg;
+}
+
 function load(args) {
   while (args.length) {
     var arg = args.shift();
@@ -35,6 +64,18 @@ function load(args) {
       case '-v':
       case '--version':
         abort(JSON.parse(fs.readFileSync(npm, 'utf8')).version);
+        break;
+      case '-r':
+      case '--runner':
+        abort(runner(args.shift()));
+        break;
+      case '-t':
+      case '--template':
+        abort(template(args.shift()));
+        break;
+      case '-l':
+      case '--list-templates':
+        abort(list());
         break;
       case '-s':
       case '--silent':
@@ -57,13 +98,13 @@ function load(args) {
   notify('watchn has ' + state);
   runner = require(file);
   runner.init(watcher);
-
-  /* fs.watchFile(file, {persistent: true, interval: 50}, function (curr, prev) {
-    if (curr.mtime > prev.mtime) {
-      reload();
-    }
-  }); */
 }
+
+load(argv.slice());
+state = 'reloaded..';
+
+
+// Reloading no worky because modules are cached. Probably need to run in a child process
 
 /*
 function reload() {
@@ -74,10 +115,10 @@ function reload() {
   fs.unwatchFile(file)
   load(argv.slice());
 }
+  fs.watchFile(file, {persistent: true, interval: 50}, function (curr, prev) {
+    if (curr.mtime > prev.mtime) {
+      reload();
+    }
+  });
  */
-
-load(argv.slice());
-state = 'reloaded..';
-
-// Reloading no worky because modules are cached. Probably need to run in a child process
 
