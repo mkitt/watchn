@@ -4,8 +4,6 @@ var tests = './test/';
 var libs = './lib/';
 var publics = './examples/public/';
 var demo = './examples/demo.js';
-var Watchn = require('../lib/watchn');
-var watcher = new Watchn();
 
 
 function notify(msg, growl) {
@@ -15,37 +13,61 @@ function notify(msg, growl) {
   }
 }
 
-watcher.watch('test', [tests, libs], function(options) {
-  if (options.curr > options.prev) {
-    exec('make test', function(error, stdout, stderr) {
-      var gmsg = watcher.trim(watcher.trimANSI(stderr));
+module.exports.init = function(watchn) {
 
-      if (error !== null) {
-        gmsg = 'Test ' + gmsg.substr(gmsg.search(/(failures)/i));
-        notify(stderr, {name: 'Expresso', msg: gmsg});
+  watchn.watch('test', [tests, libs], function(options) {
+    if (options.curr > options.prev) {
+      exec('make test', function(error, stdout, stderr) {
+        var gmsg = watchn.trim(watchn.trimANSI(stderr));
 
-      } else {
-        var cmsg = watcher.trim(watcher.trimNewlines(stderr));
-        notify(cmsg, {name: 'Expresso', msg: gmsg + ' passed'});
-      }
-    });
-  }
-});
+        if (error !== null) {
+          gmsg = 'Test ' + gmsg.substr(gmsg.search(/(failures)/i));
+          notify(stderr, {name: 'Expresso', msg: gmsg});
 
-watcher.watch('styles', [publics + 'stylesheets/'], function(options) {
-  if (options.curr > options.prev) {
-    exec('make css', function(error, stdout, stderr) {
+        } else {
+          var cmsg = watchn.trim(watchn.trimNewlines(stderr));
+          notify(cmsg, {name: 'Expresso', msg: gmsg + ' passed'});
+        }
+      });
+    }
+  });
 
-      if (error !== null)
-        notify(error.message, {name: 'Stylus', msg: 'Build Failed!'});
-      else
-        notify('styles generated');
+  watchn.watch('styles', [publics + 'stylesheets/'], function(options) {
+    if (options.curr > options.prev) {
+      exec('make css', function(error, stdout, stderr) {
 
-    });
-  }
-});
+        if (error !== null)
+          notify(error.message, {name: 'Stylus', msg: 'Build Failed!'});
+        else
+          notify('styles generated');
 
+      });
+    }
+  });
 
-// ADD A RELOAD SCRIPT!
-// self.changed({curr: curr.mtime, prev: prev.mtime, item: item, stats: stats});
+  watchn.watch('markup', [publics + 'views/'], function(options) {
+    if (options.curr > options.prev) {
+      exec('make html', function(error, stdout, stderr) {
+
+        if (error !== null)
+          notify(error.message, {name: 'Jade', msg: 'Build Failed!'});
+        else
+          notify('markup generated');
+      });
+    }
+  });
+
+  watchn.watch('js', [publics + 'javascripts/src/'], function(options) {
+    if (options.curr > options.prev) {
+      exec('make js', function(error, stdout, stderr) {
+
+        if (error !== null)
+          notify(error.message, {name: 'JavaScript', msg: 'Build Failed!'});
+        else
+          notify('js generated');
+      });
+    }
+  });
+
+};
 
