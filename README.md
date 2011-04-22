@@ -30,3 +30,17 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
 CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+<!--
+TODO:
+  - clean up the crazy loops
+  - proper exit strategy
+  - npm publish and testing
+  - fix reloading (needs to run in child process)
+  - watchn errors should really broadcast a message
+  - blow out the cli with generators
+  - documentation
+  - add documentation example
+  - utility method for finding files based on filetype
+  - Peer review
+ -->
