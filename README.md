@@ -1,16 +1,60 @@
 
 # watchn
 
-Intelligently auto execute targets on file/directory changes.
+Intelligently and continuously auto execute targets on file/directory changes. File watching on steroids.
 
-Large refactor and testing currently in process. Currently not published to `npm`, but coming shortly. Check out the demo and tests for the time being.
+Currently in active development and testing. Full documentation and use case studies coming soon.
+
+
+## Installation
+
+    npm install watchn
+
+
+## Usage and Options
+
+    Usage:
+      watchn [options] <program>
+
+    Program <required>:
+      <program>                   The runner program to respond to watched items
+
+    Options [optional]:
+      -h, --help                  Output help information
+      -v, --version               Output the current version
+      -s, --silent                Quiet watchn except for errors
+      -r, --runner <name>         Basic stub for a new runner file
+      -t, --template <name>       Generate a watchn.watch method for a program type
+      -l, --list-templates        List available template arguments for generation
+
+    Examples:
+      watchn watchnrunner.js      Starts watchn with a runner file
+      watchn -s watchnrunner.js   Starts watchn in quiet mode with a runner file
+      watchn -r watchnrunner.js   Generates a default runner file
+      watchn -t stylus            Generates a watch method for the stylus library
+      watchn -l                   Lists available templates for various libraries
+
+
+## Todo
+
+- Clean up the crazy loops, it's pretty inefficient at the moment
+- Documentation
+- Add a documentation example to the demo
+- Fix reloading (needs to run in child process)
+- Utility method for finding files based on filetype
+- Peer review
+
+
+## Inspiration
+
+Loosely based on [mynyml's fabulous watchr for ruby](http://mynyml.com/ruby/flexible-continuous-testing)
 
 
 ## License
 
 (The MIT License)
 
-Copyright (c) 2011 Matthew Kitt &lt;mk.kitt@gmail.com&gt;
+Copyright (c) 2011 Matthew Kitt
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -31,16 +75,3 @@ CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-<!--
-TODO:
-  - clean up the crazy loops
-  - proper exit strategy
-  - npm publish and testing
-  - fix reloading (needs to run in child process)
-  - watchn errors should really broadcast a message
-  - blow out the cli with generators
-  - documentation
-  - add documentation example
-  - utility method for finding files based on filetype
-  - Peer review
- -->
