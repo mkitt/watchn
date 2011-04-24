@@ -2,15 +2,17 @@
 
 var fs = require('fs');
 var path = require('path');
+var module = require('module');
+var spawn = require("child_process").spawn;
 var Watchn = require('../lib/watchn');
-var argv = process.argv.slice(2)
 var npm = __dirname + '/../package.json';
 var templates = __dirname + '/../templates/';
+var args = process.argv.slice(2)
 var silent = false;
 var state = 'started..';
 var file;
 var watcher;
-var runner;
+var child;
 
 
 function notify(msg) {
@@ -53,72 +55,70 @@ function template(name) {
   return msg;
 }
 
-function load(args) {
-  while (args.length) {
-    var arg = args.shift();
-    switch (arg) {
-      case '-h':
-      case '--help':
-        abort(fs.readFileSync(templates + 'help.txt', 'utf8'));
-        break;
-      case '-v':
-      case '--version':
-        abort(JSON.parse(fs.readFileSync(npm, 'utf8')).version);
-        break;
-      case '-r':
-      case '--runner':
-        abort(runner(args.shift()));
-        break;
-      case '-t':
-      case '--template':
-        abort(template(args.shift()));
-        break;
-      case '-l':
-      case '--list-templates':
-        abort(list());
-        break;
-      case '-s':
-      case '--silent':
-        silent = true;
-        break;
-      default:
-        file = path.join(process.cwd(), arg);
-        break;
-    }
-  }
-  if (!file) {
-    var msg = 'Error:';
-    msg += '\n  watchn requires a runner file';
-    msg += '\n  run "watchn --help" for more information';
-    abort(msg);
+function start() {
+  if (child) {
+    child.kill();
+    // this is pretty hacky, but forces the runner to be reloaded
+    delete module._cache[file];
   }
   watcher = null;
-  runner = null;
   watcher = new Watchn(silent);
   notify('watchn has ' + state);
-  runner = require(file);
-  runner.init(watcher);
+  child = spawn('node', [require(file).init(watcher)]);
 }
 
-load(argv.slice());
-state = 'reloaded..';
-
-
-// Reloading no worky because modules are cached. Probably need to run in a child process
-
-/*
 function reload() {
   try {
     watcher.dispose();
     notify('..thanks for watchn');
   } catch (err) {}
-  fs.unwatchFile(file)
-  load(argv.slice());
+  start();
 }
-  fs.watchFile(file, {persistent: true, interval: 50}, function (curr, prev) {
-    if (curr.mtime > prev.mtime) {
-      reload();
-    }
-  });
- */
 
+while (args.length) {
+  var arg = args.shift();
+  switch (arg) {
+    case '-h':
+      case '--help':
+        abort(fs.readFileSync(templates + 'help.txt', 'utf8'));
+    break;
+    case '-v':
+      case '--version':
+        abort(JSON.parse(fs.readFileSync(npm, 'utf8')).version);
+    break;
+    case '-r':
+      case '--runner':
+        abort(runner(args.shift()));
+    break;
+    case '-t':
+      case '--template':
+        abort(template(args.shift()));
+    break;
+    case '-l':
+      case '--list-templates':
+        abort(list());
+    break;
+    case '-s':
+      case '--silent':
+        silent = true;
+    break;
+    default:
+      file = path.join(process.cwd(), arg);
+    break;
+  }
+}
+if (!file) {
+  var msg = 'Error:';
+  msg += '\n  watchn requires a runner file';
+  msg += '\n  run "watchn --help" for more information';
+  abort(msg);
+}
+
+start();
+state = 'reloaded..';
+
+fs.watchFile(file, {persistent: true, interval: 50}, function (curr, prev) {
+  if (curr.mtime > prev.mtime) {
+    reload();
+  }
+});
