@@ -37,11 +37,11 @@ Currently in active development and testing. Full documentation and use case stu
 
 ## Todo
 
-- Clean up the crazy loops, it's pretty inefficient at the moment
 - Documentation
-- Add a documentation example to the demo
+- Add a documentation example to the demo and generators
 - Fix reloading (needs to run in child process)
 - Utility method for finding files based on filetype
+- Add generators for ruby and a few other languages
 - Peer review
 
 
