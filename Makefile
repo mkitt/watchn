@@ -9,8 +9,8 @@ coverage:
 demo:
 	@bin/watchn examples/demo.js
 
-log:
-	@bin/watchn examples/log.js
+watchn:
+	@bin/watchn examples/demo.js
 
 css:
 	@stylus < examples/public/stylesheets/style.styl > examples/public/stylesheets/style.css
