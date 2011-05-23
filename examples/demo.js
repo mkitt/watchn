@@ -69,5 +69,17 @@ module.exports.init = function(watchn) {
     }
   });
 
+  watchn.watch('docs', ['doc/src/'], function(options) {
+    if (options.curr > options.prev) {
+      exec('make site', function(error, stdout, stderr) {
+
+        if (error !== null)
+          notify(error.message, {name: 'Docs', msg: 'Build Failed!'});
+        else
+          notify('docs generated');
+      });
+    }
+  });
+
 };
 

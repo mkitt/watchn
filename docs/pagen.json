@@ -1,0 +1,18 @@
+{
+  "head"     : "/Users/mkitt/Sites/mkitt.github.com/app/views/head.html",
+  "tail"     : "/Users/mkitt/Sites/mkitt.github.com/app/views/tail.html",
+  "mddir"    : "docs/src",
+  "htmldir"  : "docs/",
+  "snippet"  : "<li><a href='@HREF'>@LINK</a></li>\n\t",
+  "headvars" : {
+    "@TITLE"    : "watchn",
+    "@DESC"     : "Intelligently and continuously auto execute targets on file/directory changes.",
+    "@CSS"      : "http://mkitt.github.com/stylesheets/white.css",
+    "@PROJECT"  : "https://github.com/mkitt/watchn",
+    "@RIBBON"   : "http://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png",
+    "@NAV"      : {
+      "Home"      : "/",
+      "Annotated Source"      : "watchn.html"
+    }
+  }
+}

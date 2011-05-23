@@ -25,9 +25,14 @@ js:
 	@cat examples/public/javascripts/src/file2.js >> examples/public/javascripts/app.js
 	@uglifyjs -v -o examples/public/javascripts/app.min.js examples/public/javascripts/app.js
 
+docs:
+	@docco lib/*.js
 
-publish: coverage demo
+site:
+	@pagen docs/pagen.json
+
+publish: coverage docs site
 
 
-.PHONY: test coverage demo css html publish
+.PHONY: test coverage demo css html docs site publish
 
