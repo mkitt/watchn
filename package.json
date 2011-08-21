@@ -1,6 +1,6 @@
 {
     "name": "watchn"
-  , "version": "0.0.9"
+  , "version": "0.1.0"
   , "description": "Intelligently auto execute tasks on file/directory changes"
   , "keywords": ["development tool", "watch", "notify", "dev", "development"]
   , "author": "Matthew Kitt <mk.kitt@gmail.com> (http://mkitt.net/)"
