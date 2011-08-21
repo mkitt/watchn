@@ -20,6 +20,8 @@ Once watchn is installed, it will give you an executable you can access from you
 
 [Check out the .watchn file](https://github.com/mkitt/watchn/blob/master/.watchn) to see the runner associated with this project and the various tasks it's calling.
 
+[Check out the annotated source files](http://mkitt.github.com/watchn/watchn.html) to look under the covers.
+
 
 ## Anatomy of a Watchn Runner
 
@@ -137,11 +139,9 @@ The first parameter `'test'` is an id used internally to categorize the target t
       watchn -t docco             Outputs a watch method for docco to stdout
       watchn -l                   Lists available templates for various libraries
 
-
 ## Todo
 
 - Utility method for finding files based on filetype
-- gh-pages branch
 - Peer review
 
 
