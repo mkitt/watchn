@@ -16,8 +16,13 @@ Options [optional]:
   -l, --list-templates        List available template arguments for generation
 
 Examples:
-  watchn watchnrunner.js      Starts watchn with a runner file
-  watchn -s watchnrunner.js   Starts watchn in quiet mode with a runner file
-  watchn -r watchnrunner.js   Generates a default runner file
-  watchn -t stylus            Generates a watch method for the stylus library
+  watchn .watchn              Starts watchn with an existing runner file
+  watchn -s .watchn           Starts watchn in quiet mode with a runner file
+  watchn -r .watchn           Generates a default runner file
+  watchn -t stylus            Outputs a watch method for stylus to stdout
+  watchn -t scss              Outputs a watch method for scss to stdout
+  watchn -t jade              Outputs a watch method for jade to stdout
+  watchn -t haml              Outputs a watch method for haml to stdout
+  watchn -t expresso          Outputs a watch method for expresso to stdout
+  watchn -t docco             Outputs a watch method for docco to stdout
   watchn -l                   Lists available templates for various libraries
