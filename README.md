@@ -141,6 +141,16 @@ The first parameter `'test'` is an id used internally to categorize the target t
 
 ## Todo
 
+- Simple Reporters for templates
+- `watchn` is doing to much
+- Add jasmine-node
+- Add jasmine-dom
+- Add jshint
+- Add vows
+- Add uglify
+- Add patterns to documentation and move to a reporters file
+- `console.log(new Date().toTimeString() + ': ' + msg)`
+- return `this` on all public methods for chaining
 - Utility method for finding files based on filetype
 - Peer review
 

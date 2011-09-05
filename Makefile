@@ -27,6 +27,8 @@ docs:
 
 publish: coverage docs site
 
+noop:
 
-.PHONY: test coverage demo css html docs publish
+
+.PHONY: test coverage demo css html docs publish noop
 

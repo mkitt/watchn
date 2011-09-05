@@ -14,6 +14,10 @@ function notify(msg, growl) {
 
 module.exports.init = function(watchn) {
 
+  watchn.xwatch('test', [tests, libs], function(options) {
+    watchn.execute('make test', options, 'expresso', true, {showPass: false, showFail:true})
+  })
+
   watchn.watch('test', [tests, libs], function(options) {
     if (options.curr > options.prev) {
       exec('make test', function(error, stdout, stderr) {
@@ -47,7 +51,6 @@ module.exports.init = function(watchn) {
   watchn.watch('markup', [publics + 'views/'], function(options) {
     if (options.curr > options.prev) {
       exec('make html', function(error, stdout, stderr) {
-
         if (error !== null)
           notify(error.message, {name: 'Jade', msg: 'Build Failed!'});
         else

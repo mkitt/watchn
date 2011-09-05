@@ -4,15 +4,15 @@ var assert = require('assert')
 var path = require('path')
 var exec = require('child_process').exec
 var Watchn = require('watchn')
-var watcher
+var watchn
 var fixtures = path.normalize('./test/fixtures/')
 
 
 function before() {
   try {
-    watcher.dispose()
+    watchn.dispose()
   } catch (err) {}
-  watcher = new Watchn(true)
+  watchn = new Watchn(true)
 }
 
 
@@ -22,250 +22,302 @@ module.exports = {
 
   'test #constructor': function() {
     before()
-    assert.eql(watcher.watched.length, 0)
-    assert.eql(watcher.rules.length, 0)
+    assert.eql(watchn.watched.length, 0)
+    assert.eql(watchn.rules.length, 0)
+  },
+
+// todo: failing
+  'test #constructor created a default basic reporter': function() {
+    before()
+    assert.ok(watchn.reporters.hasKey('basic'))
+  },
+
+  'test #execute throws on missing required arguments': function() {
+    before()
+
+    assert.throws(function () {
+      watchn.execute()
+    })
+  },
+
+// todo: failing since we haven't created the reporter
+  'test #execute defaults to the basic as the reporter': function() {
+    before()
+    watchn.execute('make noop', {curr:0, prev:0})
+    assert.eql(watchn.reporters.hasKey('basic'))
+  },
+// todo: remaining tests for #execute
+  
+// todo: failing
+  'test #getReporter returns me an instance of a reporter already created': function() {
+    before()
+    assert.eql(watchn.getReporter('basic'), watchn.reporter.get('basic'))
+  },
+
+// todo: failing
+  'test #getReporter returns me an instance of a reporter not already created': function() {
+    before()
+    assert.eql(watchn.getReporter('expresso'), watchn.reporter.hasKey('expresso'))
+    assert.eql(watchn.getReporter('expresso'), watchn.reporter.get('expresso'))
+  },
+
+// todo: failing
+  'test #createReporter from one of the default reporters (in path)': function() {
+    before()
+    var reporter = watchn.createReporter('expresso')
+    assert.eql(watchn.getReporter('expresso'), watchn.reporter.hasKey('expresso'))
+    assert.eql(watchn.getReporter('expresso'), watchn.reporter.get('expresso'))
+  },
+
+// todo: failing
+  'test #createReporter from a user defined reporter (outside path)': function() {
+    before()
+    var reporter = watchn.createReporter('newsie')
+    assert.eql(watchn.getReporter('newsie'), reporter)
+    assert.eql(watchn.getReporter('newsie'), watchn.reporter.hasKey('newsie'))
+    assert.eql(watchn.getReporter('newsie'), watchn.reporter.get('newsie'))
   },
 
   'test #xwatch is a noop method': function() {
     before()
-    watcher.xwatch('test', [fixtures, __filename], function(){})
-    assert.eql(watcher.watched.length, 0)
-    assert.eql(watcher.rules.length, 0)
+    watchn.xwatch('test', [fixtures, __filename], function(){})
+    assert.eql(watchn.watched.length, 0)
+    assert.eql(watchn.rules.length, 0)
   },
 
   'test #watch throws errors on missing args': function() {
     before()
     assert.throws(function () {
-      watcher.watch()
+      watchn.watch()
     })
     assert.throws(function () {
-      watcher.watch('test')
+      watchn.watch('test')
     })
     assert.throws(function () {
-      watcher.watch('test', fixtures)
+      watchn.watch('test', fixtures)
     })
   },
 
   'test #watch from a string location': function() {
     before()
-    watcher.watch('test', __filename, function(){})
-    assert.eql(watcher.watched.length, 1)
-    assert.ok(watcher.watched.hasValue(__filename))
-    assert.ok(watcher.watched.hasKey(watcher.uid(__filename)))
+    watchn.watch('test', __filename, function(){})
+    assert.eql(watchn.watched.length, 1)
+    assert.ok(watchn.watched.hasValue(__filename))
+    assert.ok(watchn.watched.hasKey(watchn.uid(__filename)))
   },
 
   'test #watch from an Array': function() {
     before()
-    watcher.watch('test', [fixtures, __filename], function(){})
-    assert.eql(watcher.watched.length, 2)
-    assert.ok(watcher.watched.hasValue(__filename))
-    assert.ok(watcher.watched.hasKey(watcher.uid(__filename)))
-    assert.ok(watcher.watched.hasValue(fixtures))
-    assert.ok(watcher.watched.hasKey(watcher.uid(fixtures)))
+    watchn.watch('test', [fixtures, __filename], function(){})
+    assert.eql(watchn.watched.length, 2)
+    assert.ok(watchn.watched.hasValue(__filename))
+    assert.ok(watchn.watched.hasKey(watchn.uid(__filename)))
+    assert.ok(watchn.watched.hasValue(fixtures))
+    assert.ok(watchn.watched.hasKey(watchn.uid(fixtures)))
   },
 
   'test #unwatch without args': function() {
     before()
-    watcher.watch('test', [fixtures, __filename], function(){})
-    watcher.unwatch()
-    assert.eql(watcher.watched.length, 0)
-    assert.eql(watcher.rules.length, 0)
+    watchn.watch('test', [fixtures, __filename], function(){})
+    watchn.unwatch()
+    assert.eql(watchn.watched.length, 0)
+    assert.eql(watchn.rules.length, 0)
   },
 
   'test #unwatch by rule': function() {
     before()
-    watcher.watch('test', [fixtures, __filename], function(){})
-    watcher.watch('demo', [fixtures, __filename], function(){})
+    watchn.watch('test', [fixtures, __filename], function(){})
+    watchn.watch('demo', [fixtures, __filename], function(){})
 
-    assert.eql(watcher.rules.length, 2)
-    watcher.unwatch('test')
-    assert.eql(watcher.rules.length, 1)
-    assert.eql(watcher.rules.hasKey('demo'), true)
-    assert.eql(watcher.rules.hasKey('test'), false)
+    assert.eql(watchn.rules.length, 2)
+    watchn.unwatch('test')
+    assert.eql(watchn.rules.length, 1)
+    assert.eql(watchn.rules.hasKey('demo'), true)
+    assert.eql(watchn.rules.hasKey('test'), false)
   },
 
   'test #unwatch by location': function() {
     before()
-    watcher.watch('test', [fixtures, __filename], function(){})
-    watcher.watch('demo', [fixtures, __filename], function(){})
-    watcher.unwatch(null, fixtures)
+    watchn.watch('test', [fixtures, __filename], function(){})
+    watchn.watch('demo', [fixtures, __filename], function(){})
+    watchn.unwatch(null, fixtures)
 
-    assert.eql(watcher.rules.length, 2)
-    assert.eql(watcher.rules.get('test').watched.length, 1)
-    assert.eql(watcher.rules.get('demo').watched.length, 1)
-    assert.eql(watcher.rules.get('test').watched.hasValue(fixtures), false)
-    assert.eql(watcher.rules.get('demo').watched.hasValue(fixtures), false)
-    assert.eql(watcher.rules.get('test').watched.hasValue(__filename), true)
-    assert.eql(watcher.rules.get('demo').watched.hasValue(__filename), true)
-    assert.eql(watcher.watched.length, 1)
+    assert.eql(watchn.rules.length, 2)
+    assert.eql(watchn.rules.get('test').watched.length, 1)
+    assert.eql(watchn.rules.get('demo').watched.length, 1)
+    assert.eql(watchn.rules.get('test').watched.hasValue(fixtures), false)
+    assert.eql(watchn.rules.get('demo').watched.hasValue(fixtures), false)
+    assert.eql(watchn.rules.get('test').watched.hasValue(__filename), true)
+    assert.eql(watchn.rules.get('demo').watched.hasValue(__filename), true)
+    assert.eql(watchn.watched.length, 1)
   },
 
   'test #unwatch by rule and location': function() {
     before()
-    watcher.watch('test', [fixtures, __filename], function(){})
-    watcher.watch('demo', [fixtures, __filename], function(){})
-    watcher.unwatch('test', fixtures)
+    watchn.watch('test', [fixtures, __filename], function(){})
+    watchn.watch('demo', [fixtures, __filename], function(){})
+    watchn.unwatch('test', fixtures)
 
-    assert.eql(watcher.rules.get('test').watched.length, 1)
-    assert.eql(watcher.rules.get('test').watched.hasValue(fixtures), false)
-    assert.eql(watcher.rules.get('test').watched.hasValue(__filename), true)
-    assert.eql(watcher.rules.get('demo').watched.hasValue(fixtures), true)
-    assert.eql(watcher.rules.get('demo').watched.hasValue(__filename), true)
+    assert.eql(watchn.rules.get('test').watched.length, 1)
+    assert.eql(watchn.rules.get('test').watched.hasValue(fixtures), false)
+    assert.eql(watchn.rules.get('test').watched.hasValue(__filename), true)
+    assert.eql(watchn.rules.get('demo').watched.hasValue(fixtures), true)
+    assert.eql(watchn.rules.get('demo').watched.hasValue(__filename), true)
   },
 
   'test #changed': function() {
     before()
-    watcher.addToRules('test', __filename, function(options) {
+    watchn.addToRules('test', __filename, function(options) {
       assert.eql(__filename, options.item)
     })
-    watcher.addToRules('demo', __filename, function(options) {
+    watchn.addToRules('demo', __filename, function(options) {
       assert.eql(__filename, options.item)
     })
-    watcher.changed({curr: null, prev: null, item: __filename, stats: null})
+    watchn.changed({curr: null, prev: null, item: __filename, stats: null})
   },
 
   // slightly lame..
   'test #notify': function() {
     before()
-    watcher.silent = false
+    watchn.silent = false
     assert.doesNotThrow(function () {
-      watcher.notify('')
+      watchn.notify('')
     })
-    watcher.silent = true
+    watchn.silent = true
   },
 
   'test #inspect': function() {
     before()
-    watcher.watch('test', [fixtures, __filename], function(){})
-    assert.includes(watcher.inspect(), fixtures)
-    assert.includes(watcher.inspect(), __filename)
+    watchn.watch('test', [fixtures, __filename], function(){})
+    assert.includes(watchn.inspect(), fixtures)
+    assert.includes(watchn.inspect(), __filename)
   },
 
   'test #dispose': function() {
     before()
-    assert.eql(watcher.watched.length, 0)
-    watcher.dispose()
+    assert.eql(watchn.watched.length, 0)
+    watchn.dispose()
   },
 
   /* Internal */
 
   'test #addToWatched': function() {
     before()
-    assert.eql(watcher.addToWatched(fixtures), false)
-    assert.eql(watcher.addToWatched(fixtures), true)
-    assert.eql(watcher.watched.length, 1)
-    assert.ok(watcher.watched.hasValue(fixtures))
-    assert.ok(watcher.watched.hasKey(watcher.uid(fixtures)))
+    assert.eql(watchn.addToWatched(fixtures), false)
+    assert.eql(watchn.addToWatched(fixtures), true)
+    assert.eql(watchn.watched.length, 1)
+    assert.ok(watchn.watched.hasValue(fixtures))
+    assert.ok(watchn.watched.hasKey(watchn.uid(fixtures)))
   },
 
   'test #addToRules': function() {
     before()
-    assert.eql(watcher.addToRules('test', __filename, function(){}), true)
-    assert.eql(watcher.addToRules('test', fixtures, function(){}), false)
-    assert.eql(watcher.addToRules('log', fixtures, function(){}), true)
-    assert.eql(watcher.rules.length, 2)
-    assert.eql(watcher.rules.get('test').watched.length, 2)
-    assert.eql(watcher.rules.get('log').watched.length, 1)
-    assert.ok(watcher.rules.get('test').watched.hasKey(watcher.uid(__filename)))
-    assert.ok(watcher.rules.get('log').watched.hasKey(watcher.uid(fixtures)))
+    assert.eql(watchn.addToRules('test', __filename, function(){}), true)
+    assert.eql(watchn.addToRules('test', fixtures, function(){}), false)
+    assert.eql(watchn.addToRules('log', fixtures, function(){}), true)
+    assert.eql(watchn.rules.length, 2)
+    assert.eql(watchn.rules.get('test').watched.length, 2)
+    assert.eql(watchn.rules.get('log').watched.length, 1)
+    assert.ok(watchn.rules.get('test').watched.hasKey(watchn.uid(__filename)))
+    assert.ok(watchn.rules.get('log').watched.hasKey(watchn.uid(fixtures)))
   },
 
-  'test #removeFromWatched single watcher': function() {
+  'test #removeFromWatched single watchn': function() {
     before()
-    assert.eql(watcher.addToWatched(fixtures), false)
-    assert.eql(watcher.watched.length, 1)
-    assert.eql(watcher.removeFromWatched(fixtures), false)
-    assert.eql(watcher.watched.length, 0)
+    assert.eql(watchn.addToWatched(fixtures), false)
+    assert.eql(watchn.watched.length, 1)
+    assert.eql(watchn.removeFromWatched(fixtures), false)
+    assert.eql(watchn.watched.length, 0)
   },
 
-  'test #removeFromWatched multiple watchers': function() {
+  'test #removeFromWatched multiple watchns': function() {
     before()
-    assert.eql(watcher.addToWatched(fixtures), false)
-    watcher.addToRules('test', fixtures, function(){})
-    watcher.addToRules('log', fixtures, function(){})
-    assert.eql(watcher.watched.length, 1)
-    assert.eql(watcher.rules.length, 2)
+    assert.eql(watchn.addToWatched(fixtures), false)
+    watchn.addToRules('test', fixtures, function(){})
+    watchn.addToRules('log', fixtures, function(){})
+    assert.eql(watchn.watched.length, 1)
+    assert.eql(watchn.rules.length, 2)
 
-    watcher.removeRule('test')
-    assert.eql(watcher.watched.length, 1)
-    assert.eql(watcher.watched.hasKey(watcher.uid(fixtures)), true)
-    assert.eql(watcher.watched.hasValue(fixtures), true)
+    watchn.removeRule('test')
+    assert.eql(watchn.watched.length, 1)
+    assert.eql(watchn.watched.hasKey(watchn.uid(fixtures)), true)
+    assert.eql(watchn.watched.hasValue(fixtures), true)
   },
 
   'test #unwatchAll': function() {
     before()
-    assert.eql(watcher.addToWatched(fixtures), false)
-    assert.eql(watcher.addToWatched(__filename), false)
-    assert.eql(watcher.watched.length, 2)
-    watcher.unwatchAll()
-    assert.eql(watcher.watched.length, 0)
-    assert.eql(watcher.rules.length, 0)
+    assert.eql(watchn.addToWatched(fixtures), false)
+    assert.eql(watchn.addToWatched(__filename), false)
+    assert.eql(watchn.watched.length, 2)
+    watchn.unwatchAll()
+    assert.eql(watchn.watched.length, 0)
+    assert.eql(watchn.rules.length, 0)
   },
 
   'test #removeRule': function() {
     before()
-    watcher.addToRules('test', fixtures, function(){})
-    watcher.addToRules('log', fixtures, function(){})
+    watchn.addToRules('test', fixtures, function(){})
+    watchn.addToRules('log', fixtures, function(){})
 
-    assert.eql(watcher.rules.length, 2)
-    assert.eql(watcher.removeRule('test').length, 1)
-    assert.eql(watcher.rules.length, 1)
-    assert.eql(watcher.rules.hasKey('log'), true)
-    assert.eql(watcher.rules.hasKey('test'), false)
+    assert.eql(watchn.rules.length, 2)
+    assert.eql(watchn.removeRule('test').length, 1)
+    assert.eql(watchn.rules.length, 1)
+    assert.eql(watchn.rules.hasKey('log'), true)
+    assert.eql(watchn.rules.hasKey('test'), false)
   },
 
   'test #removeLocationFromRule': function() {
     before()
-    watcher.addToRules('test', __filename, function(){})
-    watcher.addToRules('test', fixtures, function(){})
-    assert.eql(watcher.addToWatched(__filename), false)
-    assert.eql(watcher.addToWatched(fixtures), false)
+    watchn.addToRules('test', __filename, function(){})
+    watchn.addToRules('test', fixtures, function(){})
+    assert.eql(watchn.addToWatched(__filename), false)
+    assert.eql(watchn.addToWatched(fixtures), false)
 
-    watcher.removeLocationFromRule('test', __filename)
-    assert.eql(watcher.rules.get('test').watched.length, 1)
-    assert.eql(watcher.watched.length, 1)
-    assert.eql(watcher.rules.get('test').watched.hasValue(__filename), false)
+    watchn.removeLocationFromRule('test', __filename)
+    assert.eql(watchn.rules.get('test').watched.length, 1)
+    assert.eql(watchn.watched.length, 1)
+    assert.eql(watchn.rules.get('test').watched.hasValue(__filename), false)
   },
 
   'test #removeLocationsFromRule': function() {
     before()
-    watcher.addToRules('test', __filename, function(){})
-    watcher.addToRules('demo', __filename, function(){})
-    watcher.addToRules('test', fixtures, function(){})
+    watchn.addToRules('test', __filename, function(){})
+    watchn.addToRules('demo', __filename, function(){})
+    watchn.addToRules('test', fixtures, function(){})
 
-    assert.eql(watcher.removeLocationsFromRule('test', __filename).length, 1)
-    assert.eql(watcher.rules.get('test').watched.length, 1)
-    assert.eql(watcher.rules.get('test').watched.hasValue(__filename), false)
+    assert.eql(watchn.removeLocationsFromRule('test', __filename).length, 1)
+    assert.eql(watchn.rules.get('test').watched.length, 1)
+    assert.eql(watchn.rules.get('test').watched.hasValue(__filename), false)
   },
 
   'test #removeLocation': function() {
     before()
-    watcher.addToRules('test', fixtures, function(){})
-    watcher.addToRules('test', __filename, function(){})
-    watcher.addToRules('demo', __filename, function(){})
+    watchn.addToRules('test', fixtures, function(){})
+    watchn.addToRules('test', __filename, function(){})
+    watchn.addToRules('demo', __filename, function(){})
 
-    assert.eql(watcher.removeLocation(__filename), 2)
-    assert.eql(watcher.rules.length, 2)
-    assert.eql(watcher.rules.get('test').watched.length, 1)
-    assert.eql(watcher.rules.get('demo').watched.length, 0)
-    assert.eql(watcher.rules.get('test').watched.hasValue(fixtures), true)
-    assert.eql(watcher.rules.get('test').watched.hasValue(__filename), false)
-    assert.eql(watcher.rules.get('demo').watched.hasValue(__filename), false)
+    assert.eql(watchn.removeLocation(__filename), 2)
+    assert.eql(watchn.rules.length, 2)
+    assert.eql(watchn.rules.get('test').watched.length, 1)
+    assert.eql(watchn.rules.get('demo').watched.length, 0)
+    assert.eql(watchn.rules.get('test').watched.hasValue(fixtures), true)
+    assert.eql(watchn.rules.get('test').watched.hasValue(__filename), false)
+    assert.eql(watchn.rules.get('demo').watched.hasValue(__filename), false)
   },
 
   'test #removeAllLocations': function() {
     before()
-    watcher.addToRules('test', fixtures, function(){})
-    watcher.addToRules('test', __filename, function(){})
-    watcher.addToRules('demo', __filename, function(){})
+    watchn.addToRules('test', fixtures, function(){})
+    watchn.addToRules('test', __filename, function(){})
+    watchn.addToRules('demo', __filename, function(){})
 
-    assert.eql(watcher.removeAllLocations(__filename).length, 1)
-    assert.eql(watcher.rules.length, 2)
-    assert.eql(watcher.rules.get('test').watched.length, 1)
-    assert.eql(watcher.rules.get('demo').watched.length, 0)
-    assert.eql(watcher.rules.get('test').watched.hasValue(fixtures), true)
-    assert.eql(watcher.rules.get('test').watched.hasValue(__filename), false)
-    assert.eql(watcher.rules.get('demo').watched.hasValue(__filename), false)
+    assert.eql(watchn.removeAllLocations(__filename).length, 1)
+    assert.eql(watchn.rules.length, 2)
+    assert.eql(watchn.rules.get('test').watched.length, 1)
+    assert.eql(watchn.rules.get('demo').watched.length, 0)
+    assert.eql(watchn.rules.get('test').watched.hasValue(fixtures), true)
+    assert.eql(watchn.rules.get('test').watched.hasValue(__filename), false)
+    assert.eql(watchn.rules.get('demo').watched.hasValue(__filename), false)
   },
 
   'test #modified': function() {
@@ -274,31 +326,31 @@ module.exports = {
     var add = dir + 'newbie'
     before()
 
-    watcher.addToRules('mod', dir, function(options) {
+    watchn.addToRules('mod', dir, function(options) {
       assert.eql(dir, options.item)
     })
 
     fs.mkdirSync(add, '0777')
-    watcher.changed({curr: null, prev: null, item: dir, stats: null})
-    var yep = watcher.watched.values
+    watchn.changed({curr: null, prev: null, item: dir, stats: null})
+    var yep = watchn.watched.values
     fs.rmdirSync(add)
     assert.includes(yep, add)
   },
 
   'test #difference': function() {
     before()
-    assert.eql(watcher.difference([1,2,3,4], [1,2,3]), [4])
+    assert.eql(watchn.difference([1,2,3,4], [1,2,3]), [4])
   },
 
   'test #collect': function() {
     before()
-    var collected = watcher.collect([fixtures], [])
+    var collected = watchn.collect([fixtures], [])
     assert.eql(collected.length, 1)
   },
 
   'test #collect with sub directories': function() {
     before()
-    var collected = watcher.collect([path.normalize('./test/')], [])
+    var collected = watchn.collect([path.normalize('./test/')], [])
     assert.eql(collected.length, 2)
   },
 
@@ -306,8 +358,8 @@ module.exports = {
     before()
     var fixtureid = 'test_fixtures_'
     var fileid = '_test_watchn_test_js'
-    assert.eql(watcher.uid(fixtures), fixtureid)
-    assert.includes(watcher.uid(__filename), fileid)
+    assert.eql(watchn.uid(fixtures), fixtureid)
+    assert.includes(watchn.uid(__filename), fileid)
   },
 
 /* Helper Methods */
@@ -316,21 +368,21 @@ module.exports = {
     before()
     var pre = '   this is a string   '
     var post = 'this is a string'
-    assert.eql(watcher.trim(pre), post)
+    assert.eql(watchn.trim(pre), post)
   },
 
   'test #trimANSI': function() {
     before()
     var pre = '[30m100%[0m 20 tests passed'
     var post = '100% 20 tests passed'
-    assert.eql(watcher.trimANSI(pre), post)
+    assert.eql(watchn.trimANSI(pre), post)
   },
 
   'test #trimNewlines': function() {
     before()
     var pre = 'yabba\ndabba'
     var post = 'yabba dabba'
-    assert.eql(watcher.trimNewlines(pre), post)
+    assert.eql(watchn.trimNewlines(pre), post)
   }
 
 }
