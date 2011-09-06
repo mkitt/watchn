@@ -12,7 +12,7 @@ function before() {
   try {
     watchn.dispose()
   } catch (err) {}
-  watchn = new Watchn(true)
+  watchn = new Watchn(false)
 }
 
 
@@ -26,7 +26,6 @@ module.exports = {
     assert.eql(watchn.rules.length, 0)
   },
 
-// todo: failing
   'test #constructor created a default basic reporter': function() {
     before()
     assert.ok(watchn.reporters.hasKey('basic'))
@@ -40,43 +39,56 @@ module.exports = {
     })
   },
 
-// todo: failing since we haven't created the reporter
   'test #execute defaults to the basic as the reporter': function() {
     before()
     watchn.execute('make noop', {curr:0, prev:0})
-    assert.eql(watchn.reporters.hasKey('basic'))
+    assert.ok(watchn.reporters.hasKey('basic'))
   },
+
 // todo: remaining tests for #execute
-  
-// todo: failing
+
   'test #getReporter returns me an instance of a reporter already created': function() {
     before()
-    assert.eql(watchn.getReporter('basic'), watchn.reporter.get('basic'))
+    assert.eql(watchn.getReporter('basic'), watchn.reporters.get('basic'))
   },
 
-// todo: failing
+
   'test #getReporter returns me an instance of a reporter not already created': function() {
     before()
-    assert.eql(watchn.getReporter('expresso'), watchn.reporter.hasKey('expresso'))
-    assert.eql(watchn.getReporter('expresso'), watchn.reporter.get('expresso'))
+    var reporter = watchn.getReporter('expresso')
+    assert.eql(watchn.getReporter('expresso'), watchn.reporters.get('expresso'))
   },
 
-// todo: failing
   'test #createReporter from one of the default reporters (in path)': function() {
     before()
     var reporter = watchn.createReporter('expresso')
-    assert.eql(watchn.getReporter('expresso'), watchn.reporter.hasKey('expresso'))
-    assert.eql(watchn.getReporter('expresso'), watchn.reporter.get('expresso'))
+    assert.ok(watchn.reporters.hasKey('expresso'))
+    assert.eql(watchn.getReporter('expresso'), watchn.reporters.get('expresso'))
   },
 
-// todo: failing
-  'test #createReporter from a user defined reporter (outside path)': function() {
+  'test #createReporter testing the report function': function() {
     before()
-    var reporter = watchn.createReporter('newsie')
-    assert.eql(watchn.getReporter('newsie'), reporter)
-    assert.eql(watchn.getReporter('newsie'), watchn.reporter.hasKey('newsie'))
-    assert.eql(watchn.getReporter('newsie'), watchn.reporter.get('newsie'))
+    assert.throws(function () {
+      watchn.createReporter('missing')
+    })
   },
+
+/*
+  - use the default reporter if no reporter
+    - if a reporter, see if it's been created
+    - else do a lookup to see if it's in the path of watchn, else in the cwd
+    - toss an error if it can't be found or do we just use the default?
+    - if found create it and store it so we don't have to constantly initialize it
+*/
+
+// todo: failing, need to add in the ability to search for user defined reporters
+  // 'test #createReporter from a user defined reporter (outside path)': function() {
+    // before()
+    // var reporter = watchn.createReporter('test')
+    // assert.ok(watchn.reporters.hasKey('test'))
+    // assert.eql(watchn.getReporter('test'), {})
+    // assert.eql(watchn.getReporter('test'), watchn.reporters.get('test'))
+  // },
 
   'test #xwatch is a noop method': function() {
     before()
