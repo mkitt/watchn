@@ -19,19 +19,8 @@ module.exports.init = function(watchn) {
   })
 
   watchn.watch('docs', [libs], function(options) {
-    watchn.execute('make docs', options, 'basic', true, true)
+    watchn.execute('make docs', options, 'basic', false, true)
   })
-
-  watchn.xwatch('docs', [libs], function(options) {
-    if (options.curr > options.prev) {
-      exec('make docs', function(error, stdout, stderr) {
-        if (error !== null)
-          notify(error.message, {name: 'Docs', msg: 'Build Failed!'});
-        else
-          notify('docs generated');
-      });
-    }
-  });
 
   watchn.watch('styles', [publics + 'stylesheets/'], function(options) {
     if (options.curr > options.prev) {
