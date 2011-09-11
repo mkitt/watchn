@@ -4,6 +4,33 @@ var tests = './test/';
 var libs = './lib/';
 var publics = './examples/';
 
+/*
+- Add reporters and tests for:
+  - docco
+  - stylus
+  - scss
+  - jade
+  - haml
+  - concat
+  - jasmine
+  - jasmine dom
+  - coffeescript
+- Cleanup .watchn file
+- Handle notification status
+  - Show time stamp (probably should come from the executable)
+  - verbosity (look at npm - "silent", "info", "verbose", "silly")
+    - silent: only fatal errors
+    - info: reload, console logs,
+    - verbose: info +, time stamp, summary of reload
+    - silly: everything
+- Test for growl executable
+- See if we can opt out of passing options?
+- Add the ability for user defined reporters
+- Clean up any remaining todos
+- Clean up the Makefile
+- Revisit the CLI watchn file and see what needs to change?
+- Update documentation
+*/
 
 function notify(msg, growl) {
   console.log(new Date() + ': ' + msg);
@@ -19,8 +46,10 @@ module.exports.init = function(watchn) {
   })
 
   watchn.watch('docs', [libs], function(options) {
-    watchn.execute('make docs', options, 'basic', false, true)
+    watchn.execute('make docs', options, 'reporter', false, true)
   })
+
+
 
   watchn.watch('styles', [publics + 'stylesheets/'], function(options) {
     if (options.curr > options.prev) {

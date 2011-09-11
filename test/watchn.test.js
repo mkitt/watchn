@@ -12,7 +12,7 @@ function before() {
   try {
     watchn.dispose()
   } catch (err) {}
-  watchn = new Watchn(false)
+  watchn = new Watchn(true)
 }
 
 
@@ -26,9 +26,9 @@ module.exports = {
     assert.eql(watchn.rules.length, 0)
   },
 
-  'test #constructor created a default basic reporter': function() {
+  'test #constructor created a default reporter': function() {
     before()
-    assert.ok(watchn.reporters.hasKey('basic'))
+    assert.ok(watchn.reporters.hasKey('reporter'))
   },
 
   'test #execute throws on missing required arguments': function() {
@@ -39,17 +39,27 @@ module.exports = {
     })
   },
 
-  'test #execute defaults to the basic as the reporter': function() {
+  'test #execute defaults to the "reporter" as the reporter': function() {
     before()
     watchn.execute('make noop', {curr:0, prev:0})
-    assert.ok(watchn.reporters.hasKey('basic'))
+    assert.ok(watchn.reporters.hasKey('reporter'))
   },
 
-// todo: remaining tests for #execute
+// TODO: #execute exec needs to be tested?
+
+// TODO: needs to be rewritten to support reporter notifications..
+  'test #notify': function() {
+    before()
+    watchn.silent = false
+    assert.doesNotThrow(function () {
+      watchn.notify('')
+    })
+    watchn.silent = true
+  },
 
   'test #getReporter returns me an instance of a reporter already created': function() {
     before()
-    assert.eql(watchn.getReporter('basic'), watchn.reporters.get('basic'))
+    assert.eql(watchn.getReporter('reporter'), watchn.reporters.get('reporter'))
   },
 
 
@@ -73,15 +83,7 @@ module.exports = {
     })
   },
 
-/*
-  - use the default reporter if no reporter
-    - if a reporter, see if it's been created
-    - else do a lookup to see if it's in the path of watchn, else in the cwd
-    - toss an error if it can't be found or do we just use the default?
-    - if found create it and store it so we don't have to constantly initialize it
-*/
-
-// todo: failing, need to add in the ability to search for user defined reporters
+// TODO: failing, need to add in the ability to search for user defined reporters
   // 'test #createReporter from a user defined reporter (outside path)': function() {
     // before()
     // var reporter = watchn.createReporter('test')
@@ -186,16 +188,6 @@ module.exports = {
       assert.eql(__filename, options.item)
     })
     watchn.changed({curr: null, prev: null, item: __filename, stats: null})
-  },
-
-  // slightly lame..
-  'test #notify': function() {
-    before()
-    watchn.silent = false
-    assert.doesNotThrow(function () {
-      watchn.notify('')
-    })
-    watchn.silent = true
   },
 
   'test #inspect': function() {
@@ -363,7 +355,7 @@ module.exports = {
   'test #collect with sub directories': function() {
     before()
     var collected = watchn.collect([path.normalize('./test/')], [])
-    assert.eql(collected.length, 2)
+    assert.ok(collected.length > 1)
   },
 
   'test #uid': function() {
