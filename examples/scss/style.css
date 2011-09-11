@@ -1,0 +1,8 @@
+body {
+  background: blue;
+  padding: 0; }
+
+div.header {
+  background: magenta; }
+  div.header:hover {
+    background: pink; }

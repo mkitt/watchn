@@ -9,15 +9,25 @@ coverage:
 watchn:
 	@bin/watchn .watchn
 
-css:
-	@stylus < examples/stylesheets/style.styl > examples/stylesheets/style.css
-	@echo examples/stylesheets/style.css built
+scss:
+	sass examples/scss/style.scss > examples/scss/style.css
 
-html:
-	@jade < examples/views/index.jade > examples/views/index.html
-	@echo examples/views/index.html built
+sass:
+	sass examples/sass/style.sass > examples/sass/style.css
 
-js:
+haml:
+	@haml -eq examples/haml/index.haml examples/haml/index.html
+
+stylus:
+	@stylus < examples/stylus/style.styl > examples/stylus/style.css
+
+jade:
+	@jade < examples/jade/index.jade > examples/jade/index.html
+
+markdown:
+	@markdown -o examples/markdown/index.html examples/markdown/index.md
+
+uglify:
 	@cat examples/javascripts/src/file1.js > examples/javascripts/app.js
 	@cat examples/javascripts/src/file2.js >> examples/javascripts/app.js
 	@uglifyjs -v -o examples/javascripts/app.min.js examples/javascripts/app.js
@@ -25,10 +35,10 @@ js:
 docs:
 	@docco lib/*.js
 
-publish: coverage docs site
+publish: coverage docs
 
 noop:
 
 
-.PHONY: test coverage demo css html docs publish noop
+.PHONY: test coverage watchn scss sass haml stylus jade markdown uglify docs publish noop
 

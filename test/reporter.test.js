@@ -1,6 +1,6 @@
 
 var assert = require('assert')
-var Reporter = require('reporters/reporter')
+var Reporter = require('reporter')
 var reporter
 
 function before() {
@@ -65,6 +65,13 @@ module.exports = {
     var pre = 'yabba\ndabba'
     var post = 'yabba dabba'
     assert.eql(reporter.trimNewlines(pre), post)
+  },
+
+  'test #trimLastNewline': function() {
+    before()
+    var pre = 'yabba\ndabba\ndoo\n'
+    var len = reporter.trimLastNewline(pre).split('\n').length
+    assert.eql(len, 3)
   }
 
 }

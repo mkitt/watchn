@@ -1,21 +1,62 @@
 
-var exec = require('child_process').exec;
 var tests = './test/';
 var libs = './lib/';
-var publics = './examples/';
+var mkdwn = './examples/markdown/'
+var scss = './examples/scss/'
+var sass = './examples/sass/'
+var haml = './examples/haml/'
+var stylus = './examples/stylus/'
+var jade = './examples/jade/'
+var js = './examples/javascripts/src'
+
+module.exports.init = function(watchn) {
+
+  // uses the default reporter
+  watchn.watch('markdown', [mkdwn], function(options) {
+    watchn.execute('make markdown', options, 'reporter', false, true)
+  })
+
+  watchn.watch('test', [tests, libs], function(options) {
+    watchn.execute('make test', options, 'expresso', true, true)
+  })
+
+  watchn.watch('docs', [libs], function(options) {
+    watchn.execute('make docs', options, 'docco', false, true)
+  })
+
+  watchn.watch('scss', [scss], function(options) {
+    watchn.execute('make scss', options, 'scss', false, true)
+  })
+
+  watchn.watch('sass', [sass], function(options) {
+    watchn.execute('make sass', options, 'sass', false, true)
+  })
+
+  watchn.watch('haml', [haml], function(options) {
+    watchn.execute('make haml', options, 'haml', false, true)
+  })
+
+  watchn.watch('stylus', [stylus], function(options) {
+    watchn.execute('make stylus', options, 'stylus', false, true)
+  })
+
+  watchn.watch('jade', [jade], function(options) {
+    watchn.execute('make jade', options, 'jade', false, true)
+  })
+
+  watchn.watch('uglify', [js], function(options) {
+    watchn.execute('make uglify', options, 'uglify', false, true)
+  })
+
+}
 
 /*
 - Add reporters and tests for:
-  - docco
-  - stylus
-  - scss
-  - jade
-  - haml
-  - concat
+  - coffeescript
   - jasmine
   - jasmine dom
-  - coffeescript
-- Cleanup .watchn file
+  - jshint
+  - vows
 - Handle notification status
   - Show time stamp (probably should come from the executable)
   - verbosity (look at npm - "silent", "info", "verbose", "silly")
@@ -23,69 +64,9 @@ var publics = './examples/';
     - info: reload, console logs,
     - verbose: info +, time stamp, summary of reload
     - silly: everything
-- Test for growl executable
-- See if we can opt out of passing options?
-- Add the ability for user defined reporters
 - Clean up any remaining todos
-- Clean up the Makefile
 - Revisit the CLI watchn file and see what needs to change?
-- Update documentation
+- Add the ability for user defined reporters
+- Update documentation and README
 */
-
-function notify(msg, growl) {
-  console.log(new Date() + ': ' + msg);
-  if (growl) {
-    exec('growlnotify -name '+  growl.name + ' -m "' + growl.msg + '"');
-  }
-}
-
-module.exports.init = function(watchn) {
-
-  watchn.watch('test', [tests, libs], function(options) {
-    watchn.execute('make test', options, 'expresso', true, true)
-  })
-
-  watchn.watch('docs', [libs], function(options) {
-    watchn.execute('make docs', options, 'reporter', false, true)
-  })
-
-
-
-  watchn.watch('styles', [publics + 'stylesheets/'], function(options) {
-    if (options.curr > options.prev) {
-      exec('make css', function(error, stdout, stderr) {
-
-        if (error !== null)
-          notify(error.message, {name: 'Stylus', msg: 'Build Failed!'});
-        else
-          notify('styles generated');
-
-      });
-    }
-  });
-
-  watchn.watch('markup', [publics + 'views/'], function(options) {
-    if (options.curr > options.prev) {
-      exec('make html', function(error, stdout, stderr) {
-        if (error !== null)
-          notify(error.message, {name: 'Jade', msg: 'Build Failed!'});
-        else
-          notify('markup generated');
-      });
-    }
-  });
-
-  watchn.watch('js', [publics + 'javascripts/src/'], function(options) {
-    if (options.curr > options.prev) {
-      exec('make js', function(error, stdout, stderr) {
-
-        if (error !== null)
-          notify(error.message, {name: 'JavaScript', msg: 'Build Failed!'});
-        else
-          notify('js generated');
-      });
-    }
-  });
-
-};
 

@@ -1,0 +1,13 @@
+
+body {
+  background: blue;
+  padding: 0;
+}
+
+div.header {
+  background: magenta;
+  &:hover {
+    background: pink;
+  }
+}
+
