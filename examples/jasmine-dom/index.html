@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>jasmine.</title>
+    <link href="jasmine.css" rel="stylesheet" type="text/css"/>
+    <script src="jasmine.js" type="text/javascript"></script>
+
+    <!-- Include src files here... -->
+    <!-- <script src="/javascripts/libs.js" type="text/javascript"></script> -->
+    <!-- <script src="/javascripts/app.js" type="text/javascript"></script> -->
+
+    <!-- Include test files here... -->
+    <script src="specs.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+      (function() {
+         var jasmineEnv = jasmine.getEnv();
+         var trivialReporter = new jasmine.TrivialReporter();
+         jasmineEnv.updateInterval = 1000;
+         jasmineEnv.addReporter(trivialReporter);
+         jasmineEnv.specFilter = function(spec) {
+           return trivialReporter.specFilter(spec);
+         };
+         window.onload = function() {
+           jasmineEnv.execute();
+         };
+       })();
+     </script>
+ </head>
+ <body>
+ </body>
+</html>
+
