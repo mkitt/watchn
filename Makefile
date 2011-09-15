@@ -15,6 +15,15 @@ coffee:
 jasmine:
 	@jasmine-node examples/jasmine/test_spec.js
 
+jasmine_dom:
+	@jasmine-dom --runner examples/jasmine-dom/index.html --format nice
+
+jshint:
+	@jshint examples/javascripts/src/
+
+vows:
+	@echo Not yet completed!
+
 scss:
 	@sass examples/scss/style.scss > examples/scss/style.css
 
@@ -46,5 +55,5 @@ publish: coverage docs
 noop:
 
 
-.PHONY: test coverage watchn scss sass haml stylus jade markdown uglify docs publish noop
+.PHONY: test coverage watchn coffee jasmine jasmine_dom jshint vows scss sass haml stylus jade markdown uglify docs publish noop
 
