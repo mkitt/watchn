@@ -12,7 +12,7 @@ function before() {
   try {
     watchn.dispose()
   } catch (err) {}
-  watchn = new Watchn(true)
+  watchn = new Watchn(true, true)
 }
 
 
@@ -47,7 +47,6 @@ module.exports = {
 
 // TODO: #execute exec needs to be tested?
 
-// TODO: needs to be rewritten to support reporter notifications..
   'test #notify': function() {
     before()
     watchn.silent = false
@@ -322,6 +321,12 @@ module.exports = {
     assert.eql(watchn.rules.get('test').watched.hasValue(fixtures), true)
     assert.eql(watchn.rules.get('test').watched.hasValue(__filename), false)
     assert.eql(watchn.rules.get('demo').watched.hasValue(__filename), false)
+  },
+
+  'test #getTimestamp': function() {
+    before()
+    var time = watchn.getTimestamp()
+    assert.match(time, /\d+\:\d+\:\d+/)
   },
 
   'test #modified': function() {
