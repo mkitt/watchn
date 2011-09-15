@@ -9,11 +9,17 @@ coverage:
 watchn:
 	@bin/watchn .watchn
 
+coffee:
+	@coffee -o examples/coffeescript/ -c examples/coffeescript/
+
+jasmine:
+	@jasmine-node examples/jasmine/test_spec.js
+
 scss:
-	sass examples/scss/style.scss > examples/scss/style.css
+	@sass examples/scss/style.scss > examples/scss/style.css
 
 sass:
-	sass examples/sass/style.sass > examples/sass/style.css
+	@sass examples/sass/style.sass > examples/sass/style.css
 
 haml:
 	@haml -eq examples/haml/index.haml examples/haml/index.html

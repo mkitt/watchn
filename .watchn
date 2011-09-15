@@ -2,6 +2,8 @@
 var tests = './test/';
 var libs = './lib/';
 var mkdwn = './examples/markdown/'
+var coffee = './examples/coffeescript/'
+var jasmine = './examples/jasmine/'
 var scss = './examples/scss/'
 var sass = './examples/sass/'
 var haml = './examples/haml/'
@@ -20,8 +22,16 @@ module.exports.init = function(watchn) {
     watchn.execute('make test', options, 'expresso', true, true)
   })
 
-  watchn.watch('docs', [libs], function(options) {
+  watchn.xwatch('docs', [libs], function(options) {
     watchn.execute('make docs', options, 'docco', false, true)
+  })
+
+  watchn.watch('coffee', [coffee], function(options) {
+    watchn.execute('make coffee', options, 'coffee', false, true)
+  })
+
+  watchn.watch('jasmine', [jasmine], function(options) {
+    watchn.execute('make jasmine', options, 'jasmine', true, true)
   })
 
   watchn.watch('scss', [scss], function(options) {
@@ -52,20 +62,12 @@ module.exports.init = function(watchn) {
 
 /*
 - Add reporters and tests for:
-  - coffeescript
-  - jasmine
   - jasmine dom
   - jshint
   - vows
-- Handle notification status
-  - Show time stamp (probably should come from the executable)
-  - verbosity (look at npm - "silent", "info", "verbose", "silly")
-    - silent: only fatal errors
-    - info: reload, console logs,
-    - verbose: info +, time stamp, summary of reload
-    - silly: everything
+- Move Reporters into their own sub directory
 - Clean up any remaining todos
-- Revisit the CLI watchn file and see what needs to change?
+- Revisit the CLI watchn file and see what needs to change? (add timestamp)
 - Add the ability for user defined reporters
 - Update documentation and README
 */
