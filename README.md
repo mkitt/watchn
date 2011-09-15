@@ -141,13 +141,24 @@ The first parameter `'test'` is an id used internally to categorize the target t
 
 ## Todo
 
-- Simple Reporters for templates
-- `watchn` is doing to much
+### Reporters Branch
+
+- Revisit the CLI watchn file and add necessary changes
+  - Templates
+  - Timestamp
+- Update Documentation and README
+- Clean up remaining todos
+  - User defined reporters
+  - More testing around the execute method
 - Better error reporting for growl with Jade and Stylus
-- Add patterns to documentation and move to a reporters file
-- `console.log(new Date().toTimeString() + ': ' + msg)`
+- Add a `vows` reporter
+- Cleanup Documentation and README
+
+### Post Reporters Branch
+
+- `watchn` is doing to much needs a nice refactor
 - return `this` on all public methods for chaining
-- Utility method for finding files based on filetype
+- Utility method for finding files based on filetype for watchn
 - Peer review
 
 
