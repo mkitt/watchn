@@ -1,9 +1,9 @@
 
 test:
-	@expresso -I lib test/*
+	@expresso -I lib test/* test/reporters/*
 
 coverage:
-	@expresso -g -I lib --cov test/*
+	@expresso -g -I lib --cov test/* test/reporters/*
 	@rm -rf lib-cov
 
 watchn:

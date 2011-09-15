@@ -1,16 +1,16 @@
 
 var assert = require('assert')
-var CoffeeReporter = require('coffee_reporter')
+var JadeReporter = require('reporters/jade_reporter')
 var reporter
 
 function before() {
-  reporter = new CoffeeReporter()
+  reporter = new JadeReporter()
 }
 
 module.exports = {
   'test #constructor': function() {
     before()
-    assert.eql(reporter.name, 'CoffeeScript')
+    assert.eql(reporter.name, 'Jade')
   },
 
   'test #inherited the trim function': function() {
@@ -22,17 +22,17 @@ module.exports = {
     before()
     var report = reporter.passed(null, 'stdout', 'stderr')
     assert.eql(report.name, reporter.name)
-    assert.eql(report.msg, 'coffeescript generated')
+    assert.eql(report.msg, 'jade generated')
     assert.eql(report.gmsg, reporter.passed_message)
   },
 
   'test #failed': function() {
     before()
-    var stderr = 'first line\n second line'
+    var stderr = 'failed'
     var report = reporter.failed({msg: 'failed'}, 'stdout', stderr)
     assert.eql(report.name, reporter.name)
     assert.eql(report.msg, stderr)
-    assert.eql(report.gmsg, 'first line')
+    assert.eql(report.gmsg, reporter.failed_message)
   }
 
 }

@@ -22,7 +22,7 @@ module.exports.init = function(watchn) {
     watchn.execute('make test', options, 'expresso', true, true)
   })
 
-  watchn.xwatch('docs', [libs], function(options) {
+  watchn.watch('docs', [libs], function(options) {
     watchn.execute('make docs', options, 'docco', false, true)
   })
 
@@ -65,7 +65,6 @@ module.exports.init = function(watchn) {
   - jasmine dom
   - jshint
   - vows
-- Move Reporters into their own sub directory
 - Clean up any remaining todos
 - Revisit the CLI watchn file and see what needs to change? (add timestamp)
 - Add the ability for user defined reporters

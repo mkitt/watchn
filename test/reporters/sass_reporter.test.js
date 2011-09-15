@@ -1,16 +1,16 @@
 
 var assert = require('assert')
-var UglifyReporter = require('uglify_reporter')
+var SASSReporter = require('reporters/sass_reporter')
 var reporter
 
 function before() {
-  reporter = new UglifyReporter()
+  reporter = new SASSReporter()
 }
 
 module.exports = {
   'test #constructor': function() {
     before()
-    assert.eql(reporter.name, 'Uglify')
+    assert.eql(reporter.name, 'SASS')
   },
 
   'test #inherited the trim function': function() {
@@ -22,7 +22,7 @@ module.exports = {
     before()
     var report = reporter.passed(null, 'stdout', 'stderr')
     assert.eql(report.name, reporter.name)
-    assert.eql(report.msg, 'uglify made it ugly')
+    assert.eql(report.msg, 'sass generated')
     assert.eql(report.gmsg, reporter.passed_message)
   },
 

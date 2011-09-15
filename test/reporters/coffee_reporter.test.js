@@ -1,16 +1,16 @@
 
 var assert = require('assert')
-var SCSSReporter = require('scss_reporter')
+var CoffeeReporter = require('reporters/coffee_reporter')
 var reporter
 
 function before() {
-  reporter = new SCSSReporter()
+  reporter = new CoffeeReporter()
 }
 
 module.exports = {
   'test #constructor': function() {
     before()
-    assert.eql(reporter.name, 'SCSS')
+    assert.eql(reporter.name, 'CoffeeScript')
   },
 
   'test #inherited the trim function': function() {
@@ -22,17 +22,17 @@ module.exports = {
     before()
     var report = reporter.passed(null, 'stdout', 'stderr')
     assert.eql(report.name, reporter.name)
-    assert.eql(report.msg, 'scss generated')
+    assert.eql(report.msg, 'coffeescript generated')
     assert.eql(report.gmsg, reporter.passed_message)
   },
 
   'test #failed': function() {
     before()
-    var stderr = 'first line\n on line 4 of somefile.scss'
+    var stderr = 'first line\n second line'
     var report = reporter.failed({msg: 'failed'}, 'stdout', stderr)
     assert.eql(report.name, reporter.name)
     assert.eql(report.msg, stderr)
-    assert.eql(report.gmsg, 'Syntax Error on line 4 of somefile.scss')
+    assert.eql(report.gmsg, 'first line')
   }
 
 }

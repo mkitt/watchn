@@ -1,16 +1,16 @@
 
 var assert = require('assert')
-var JadeReporter = require('jade_reporter')
+var SCSSReporter = require('reporters/scss_reporter')
 var reporter
 
 function before() {
-  reporter = new JadeReporter()
+  reporter = new SCSSReporter()
 }
 
 module.exports = {
   'test #constructor': function() {
     before()
-    assert.eql(reporter.name, 'Jade')
+    assert.eql(reporter.name, 'SCSS')
   },
 
   'test #inherited the trim function': function() {
@@ -22,17 +22,17 @@ module.exports = {
     before()
     var report = reporter.passed(null, 'stdout', 'stderr')
     assert.eql(report.name, reporter.name)
-    assert.eql(report.msg, 'jade generated')
+    assert.eql(report.msg, 'scss generated')
     assert.eql(report.gmsg, reporter.passed_message)
   },
 
   'test #failed': function() {
     before()
-    var stderr = 'failed'
+    var stderr = 'first line\n on line 4 of somefile.scss'
     var report = reporter.failed({msg: 'failed'}, 'stdout', stderr)
     assert.eql(report.name, reporter.name)
     assert.eql(report.msg, stderr)
-    assert.eql(report.gmsg, reporter.failed_message)
+    assert.eql(report.gmsg, 'Syntax Error on line 4 of somefile.scss')
   }
 
 }

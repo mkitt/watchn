@@ -1,6 +1,6 @@
 
 var assert = require('assert')
-var HamlReporter = require('haml_reporter')
+var HamlReporter = require('reporters/haml_reporter')
 var reporter
 
 function before() {
