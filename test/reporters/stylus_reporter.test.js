@@ -28,11 +28,11 @@ module.exports = {
 
   'test #failed': function() {
     before()
-    var stderr = 'failed'
+    var stderr = 'Parse'
     var report = reporter.failed({msg: 'failed'}, 'stdout', stderr)
-    assert.eql(report.name, reporter.name)
+    assert.eql(report.name, reporter.name + ' Failed')
     assert.eql(report.msg, stderr)
-    assert.eql(report.gmsg, reporter.failed_message)
+    assert.includes(report.gmsg, 'Parse')
   }
 
 }
