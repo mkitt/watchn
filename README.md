@@ -143,9 +143,6 @@ The first parameter `'test'` is an id used internally to categorize the target t
 
 ### Reporters Branch
 
-- Revisit the CLI watchn file and add necessary changes
-  - Templates
-  - Timestamp
 - Update Documentation and README
 - Clean up remaining todos
   - User defined reporters
@@ -159,6 +156,10 @@ The first parameter `'test'` is an id used internally to categorize the target t
 - `watchn` is doing to much needs a nice refactor
 - return `this` on all public methods for chaining
 - Utility method for finding files based on filetype for watchn
+- Figure out how to broadcast a message when watchn crashes
+- Test for growl executable?
+- Growl Colors?
+- Growl Icon
 - Peer review
 
 
