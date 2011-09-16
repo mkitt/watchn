@@ -154,23 +154,18 @@ THIS NEEDS TO BE COMPLETED!!!
 
 ### Reporters Branch
 
-- Update Documentation and README (links!)
-- `watchn` is doing to much needs a nice refactor
-- return `this` on all public methods for chaining
-- Clean up remaining todos
-  - User defined reporters
-  - More testing around the execute method
-- Better error reporting for growl with Jade and Stylus
 - Add a `vows` reporter
-- Cleanup Documentation and README
+- Cleanup Documentation and README (links!)
+- Merge to master
+- `npm publish`
 
-### Post Reporters Branch
 
 - Utility method for finding files based on filetype for watchn
 - Figure out how to broadcast a message when watchn crashes
 - Test for growl executable?
 - Growl Colors?
 - Growl Icon
+- GH Pages update
 - Peer review
 
 
