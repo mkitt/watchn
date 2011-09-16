@@ -11,7 +11,7 @@ var args = process.argv.slice(2)
 var silent = false
 var state = 'started..'
 var file
-var watcher
+var watchn
 var child
 
 
@@ -29,13 +29,14 @@ function abort(msg) {
 function errormessage() {
   var msg = 'Error:'
   msg += '\n  watchn requires a runner file'
-  msg += '\n  run "watchn --help" for more information'
+  msg += '\n  run "watchn help" for more information'
   return msg
 }
 
 function runner(name) {
-  var tmpl = templates + 'runner.js'
-  var out = path.normalize(process.cwd() + '/' + name)
+  var named = name || '.watchn'
+  var tmpl = templates + 'watchn.js'
+  var out = path.normalize(process.cwd() + '/' + named)
   fs.writeFileSync(out, fs.readFileSync(tmpl, 'utf8'))
   return 'generated: ' + out
 }
@@ -43,7 +44,7 @@ function runner(name) {
 function list() {
   var msg = 'Available Templates:'
   fs.readdirSync(templates).forEach(function (item) {
-    if (item !== 'runner.js' && item !== 'help.txt')
+    if (item !== 'watchn.js' && item !== 'help.txt')
       msg += '\n  ' + path.basename(item, '.js');
   })
   return msg
@@ -57,7 +58,7 @@ function template(name) {
   } catch (err) {
     msg += 'Error:'
     msg += '\n  template "' + name + '" not found'
-    msg += '\n  run "watchn --list-templates" for available templates'
+    msg += '\n  run "watchn list" for available templates'
   }
   return msg
 }
@@ -68,16 +69,15 @@ function start() {
     // this is pretty hacky, but forces the runner to be reloaded
     delete module._cache[file];
   }
-  watcher = null
-  watcher = new Watchn(silent)
+  watchn = null
+  watchn = new Watchn(silent)
   notify('watchn has ' + state)
-  child = spawn('node', [require(file).init(watcher)])
+  child = spawn('node', [require(file).init(watchn)])
 }
 
 function reload() {
   try {
-    watcher.dispose()
-    notify('..thanks for watchn')
+    watchn.dispose()
   } catch (err) {}
   start()
 }
@@ -86,23 +86,28 @@ while (args.length) {
   var arg = args.shift()
   switch (arg) {
     case '-h':
+    case 'help':
     case '--help':
       abort(fs.readFileSync(templates + 'help.txt', 'utf8'))
       break;
     case '-v':
+    case 'version':
     case '--version':
       abort(JSON.parse(fs.readFileSync(npm, 'utf8')).version)
       break;
     case '-r':
+    case 'runner':
     case '--runner':
       abort(runner(args.shift()))
       break;
     case '-t':
+    case 'template':
     case '--template':
       abort(template(args.shift()))
       break;
     case '-l':
-    case '--list-templates':
+    case 'list':
+    case '--list':
       abort(list())
       break;
     case '-s':
