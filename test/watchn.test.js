@@ -32,66 +32,6 @@ module.exports = {
     assert.ok(watchn.reporters.hasKey('reporter'))
   },
 
-  'test #execute throws on missing required arguments': function() {
-    before()
-
-    assert.throws(function () {
-      watchn.execute()
-    })
-  },
-
-  'test #execute defaults to the "reporter" as the reporter': function() {
-    before()
-    watchn.execute('make noop', {curr:0, prev:0})
-    assert.ok(watchn.reporters.hasKey('reporter'))
-  },
-
-// TODO: #execute exec needs to be tested?
-
-  'test #notify': function() {
-    before()
-    watchn.silent = false
-    assert.doesNotThrow(function () {
-      watchn.notify('')
-    })
-    watchn.silent = true
-  },
-
-  'test #getReporter returns me an instance of a reporter already created': function() {
-    before()
-    assert.eql(watchn.getReporter('reporter'), watchn.reporters.get('reporter'))
-  },
-
-
-  'test #getReporter returns me an instance of a reporter not already created': function() {
-    before()
-    var reporter = watchn.getReporter('expresso')
-    assert.eql(watchn.getReporter('expresso'), watchn.reporters.get('expresso'))
-  },
-
-  'test #createReporter from one of the default reporters (in path)': function() {
-    before()
-    var reporter = watchn.createReporter('expresso')
-    assert.ok(watchn.reporters.hasKey('expresso'))
-    assert.eql(watchn.getReporter('expresso'), watchn.reporters.get('expresso'))
-  },
-
-  'test #createReporter testing the report function': function() {
-    before()
-    assert.throws(function () {
-      watchn.createReporter('missing')
-    })
-  },
-
-// TODO: failing, need to add in the ability to search for user defined reporters
-  // 'test #createReporter from a user defined reporter (outside path)': function() {
-    // before()
-    // var reporter = watchn.createReporter('test')
-    // assert.ok(watchn.reporters.hasKey('test'))
-    // assert.eql(watchn.getReporter('test'), {})
-    // assert.eql(watchn.getReporter('test'), watchn.reporters.get('test'))
-  // },
-
   'test #xwatch is a noop method': function() {
     before()
     watchn.xwatch('test', [fixtures, __filename], function(){})
@@ -128,6 +68,19 @@ module.exports = {
     assert.ok(watchn.watched.hasKey(utils.uid(__filename)))
     assert.ok(watchn.watched.hasValue(fixtures))
     assert.ok(watchn.watched.hasKey(utils.uid(fixtures)))
+  },
+
+  'test #execute throws on missing required arguments': function() {
+    before()
+    assert.throws(function () {
+      watchn.execute()
+    })
+  },
+
+  'test #execute defaults to the "reporter" as the reporter': function() {
+    before()
+    watchn.execute('make noop', {curr:0, prev:0})
+    assert.ok(watchn.reporters.hasKey('reporter'))
   },
 
   'test #unwatch without args': function() {
@@ -188,6 +141,15 @@ module.exports = {
       assert.eql(__filename, options.item)
     })
     watchn.changed({curr: null, prev: null, item: __filename, stats: null})
+  },
+
+  'test #notify': function() {
+    before()
+    watchn.silent = false
+    assert.doesNotThrow(function () {
+      watchn.notify('')
+    })
+    watchn.silent = true
   },
 
   'test #inspect': function() {
@@ -340,6 +302,44 @@ module.exports = {
     fs.rmdirSync(add)
     assert.includes(yep, add)
   },
+
+  'test #getReporter returns me an instance of a reporter already created': function() {
+    before()
+    assert.eql(watchn.getReporter('reporter'), watchn.reporters.get('reporter'))
+  },
+
+  'test #getReporter returns me an instance of a reporter not already created': function() {
+    before()
+    var reporter = watchn.getReporter('expresso')
+    assert.eql(watchn.getReporter('expresso'), watchn.reporters.get('expresso'))
+  },
+
+  'test #createReporter from one of the default reporters (in path)': function() {
+    before()
+    var reporter = watchn.createReporter('expresso')
+    assert.ok(watchn.reporters.hasKey('expresso'))
+    assert.eql(watchn.getReporter('expresso'), watchn.reporters.get('expresso'))
+  },
+
+  'test #createReporter testing the report function': function() {
+    before()
+    assert.throws(function () {
+      watchn.createReporter('missing')
+    })
+  },
+
+  'test #createReporter from a user defined reporter (outside path)': function() {
+    before()
+    var reporter = watchn.createReporter('custom')
+    assert.ok(watchn.reporters.hasKey('custom'))
+    assert.eql(watchn.getReporter('custom'), watchn.reporters.get('custom'))
+  },
+
+  'test #findReporterFile': function() {
+    var file = watchn.findReporterFile(process.cwd(), 'custom_reporter')
+    assert.isDefined(file)
+  },
+
 
   'test #collect': function() {
     before()

@@ -42,6 +42,10 @@ jade:
 markdown:
 	@markdown -o examples/markdown/index.html examples/markdown/index.md
 
+text:
+	@cat examples/text/text1.txt > examples/text/cat.txt
+	@cat examples/text/text2.txt >> examples/text/cat.txt
+
 uglify:
 	@cat examples/javascripts/src/file1.js > examples/javascripts/app.js
 	@cat examples/javascripts/src/file2.js >> examples/javascripts/app.js

@@ -1,6 +1,7 @@
 
 var tests = './test/'
 var libs = './lib/'
+var txt = './examples/text/'
 var mkdwn = './examples/markdown/'
 var coffee = './examples/coffeescript/'
 var jasmine = './examples/jasmine/'
@@ -15,9 +16,13 @@ var js = './examples/javascripts/src'
 module.exports.init = function(watchn) {
 
   // uses the default reporter
-  watchn.watch('markdown', [mkdwn], function(options) {
+  watchn.xwatch('markdown', [mkdwn], function(options) {
     // execute(task, options, reporter type, growl on pass, growl on fail
     watchn.execute('make markdown', options, 'reporter', false, true)
+  })
+
+  watchn.watch('txt', [txt], function(options) {
+    watchn.execute('make text', options, 'custom', true, true)
   })
 
   watchn.watch('test', [tests, libs], function(options) {
