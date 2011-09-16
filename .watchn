@@ -1,6 +1,6 @@
 
-var tests = './test/';
-var libs = './lib/';
+var tests = './test/'
+var libs = './lib/'
 var mkdwn = './examples/markdown/'
 var coffee = './examples/coffeescript/'
 var jasmine = './examples/jasmine/'
@@ -33,15 +33,15 @@ module.exports.init = function(watchn) {
   })
 
   watchn.watch('jasmine', [jasmine], function(options) {
-    watchn.execute('make jasmine', options, 'jasmine', true, true)
+    watchn.execute('make jasmine', options, 'jasmine', false, true)
   })
 
   watchn.watch('jasmine_dom', [dom], function(options) {
-    watchn.execute('make jasmine_dom', options, 'jasmine_dom', true, true)
+    watchn.execute('make jasmine_dom', options, 'jasmine_dom', false, true)
   })
 
   watchn.watch('jshint', [js], function(options) {
-    watchn.execute('make jshint', options, 'jshint', true, true)
+    watchn.execute('make jshint', options, 'jshint', false, true)
   })
 
   watchn.watch('scss', [scss], function(options) {
