@@ -3,6 +3,7 @@ var fs = require('fs')
 var assert = require('assert')
 var path = require('path')
 var exec = require('child_process').exec
+var utils = require('utils')
 var Watchn = require('watchn')
 var watchn
 var fixtures = path.normalize('./test/fixtures/')
@@ -116,7 +117,7 @@ module.exports = {
     watchn.watch('test', __filename, function(){})
     assert.eql(watchn.watched.length, 1)
     assert.ok(watchn.watched.hasValue(__filename))
-    assert.ok(watchn.watched.hasKey(watchn.uid(__filename)))
+    assert.ok(watchn.watched.hasKey(utils.uid(__filename)))
   },
 
   'test #watch from an Array': function() {
@@ -124,9 +125,9 @@ module.exports = {
     watchn.watch('test', [fixtures, __filename], function(){})
     assert.eql(watchn.watched.length, 2)
     assert.ok(watchn.watched.hasValue(__filename))
-    assert.ok(watchn.watched.hasKey(watchn.uid(__filename)))
+    assert.ok(watchn.watched.hasKey(utils.uid(__filename)))
     assert.ok(watchn.watched.hasValue(fixtures))
-    assert.ok(watchn.watched.hasKey(watchn.uid(fixtures)))
+    assert.ok(watchn.watched.hasKey(utils.uid(fixtures)))
   },
 
   'test #unwatch without args': function() {
@@ -210,7 +211,7 @@ module.exports = {
     assert.eql(watchn.addToWatched(fixtures), true)
     assert.eql(watchn.watched.length, 1)
     assert.ok(watchn.watched.hasValue(fixtures))
-    assert.ok(watchn.watched.hasKey(watchn.uid(fixtures)))
+    assert.ok(watchn.watched.hasKey(utils.uid(fixtures)))
   },
 
   'test #addToRules': function() {
@@ -221,8 +222,8 @@ module.exports = {
     assert.eql(watchn.rules.length, 2)
     assert.eql(watchn.rules.get('test').watched.length, 2)
     assert.eql(watchn.rules.get('log').watched.length, 1)
-    assert.ok(watchn.rules.get('test').watched.hasKey(watchn.uid(__filename)))
-    assert.ok(watchn.rules.get('log').watched.hasKey(watchn.uid(fixtures)))
+    assert.ok(watchn.rules.get('test').watched.hasKey(utils.uid(__filename)))
+    assert.ok(watchn.rules.get('log').watched.hasKey(utils.uid(fixtures)))
   },
 
   'test #removeFromWatched single watchn': function() {
@@ -243,7 +244,7 @@ module.exports = {
 
     watchn.removeRule('test')
     assert.eql(watchn.watched.length, 1)
-    assert.eql(watchn.watched.hasKey(watchn.uid(fixtures)), true)
+    assert.eql(watchn.watched.hasKey(utils.uid(fixtures)), true)
     assert.eql(watchn.watched.hasValue(fixtures), true)
   },
 
@@ -323,12 +324,6 @@ module.exports = {
     assert.eql(watchn.rules.get('demo').watched.hasValue(__filename), false)
   },
 
-  'test #getTimestamp': function() {
-    before()
-    var time = watchn.getTimestamp()
-    assert.match(time, /\d+\:\d+\:\d+/)
-  },
-
   'test #modified': function() {
     var self = this
     var dir = 'templates/'
@@ -346,11 +341,6 @@ module.exports = {
     assert.includes(yep, add)
   },
 
-  'test #difference': function() {
-    before()
-    assert.eql(watchn.difference([1,2,3,4], [1,2,3]), [4])
-  },
-
   'test #collect': function() {
     before()
     var collected = watchn.collect([fixtures], [])
@@ -361,38 +351,6 @@ module.exports = {
     before()
     var collected = watchn.collect([path.normalize('./test/')], [])
     assert.ok(collected.length > 1)
-  },
-
-  'test #uid': function() {
-    before()
-    var fixtureid = 'test_fixtures_'
-    var fileid = '_test_watchn_test_js'
-    assert.eql(watchn.uid(fixtures), fixtureid)
-    assert.includes(watchn.uid(__filename), fileid)
-  },
-
-/* Helper Methods */
-
-  'test #trim': function() {
-    before()
-    var pre = '   this is a string   '
-    var post = 'this is a string'
-    assert.eql(watchn.trim(pre), post)
-  },
-
-  'test #trimANSI': function() {
-    before()
-    var pre = '[30m100%[0m 20 tests passed'
-    var post = '100% 20 tests passed'
-    assert.eql(watchn.trimANSI(pre), post)
-  },
-
-  'test #trimNewlines': function() {
-    before()
-    var pre = 'yabba\ndabba'
-    var post = 'yabba dabba'
-    assert.eql(watchn.trimNewlines(pre), post)
   }
-
 }
 
