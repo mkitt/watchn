@@ -1,5 +1,5 @@
 
-Intelligently auto execute targets on file/directory changes
+Intelligently auto execute tasks on file/directory changes
 
 Usage:
   watchn [options] <program>
@@ -8,21 +8,29 @@ Program <required>:
   <program>                   The runner program to respond to watched items
 
 Options [optional]:
-  -h, --help                  Output help information
-  -v, --version               Output the current version
-  -s, --silent                Quiet watchn except for errors
-  -r, --runner <name>         Basic stub for a new runner file
-  -t, --template <name>       Generate a watchn.watch method for a program type
-  -l, --list-templates        List available template arguments for generation
+  -h, [--]help                Output help information
+  -v, [--]version             Output the current version
+  -s, [--]silent              Quiet watchn except for errors
+  -r, [--]runner <name>       Basic stub for a new runner file
+  -t, [--]template <name>     Generate a watchn.watch method
+  -l, [--]list                List available templates for generation
 
 Examples:
   watchn .watchn              Starts watchn with an existing runner file
   watchn -s .watchn           Starts watchn in quiet mode with a runner file
-  watchn -r .watchn           Generates a default runner file
-  watchn -t stylus            Outputs a watch method for stylus to stdout
-  watchn -t scss              Outputs a watch method for scss to stdout
-  watchn -t jade              Outputs a watch method for jade to stdout
-  watchn -t haml              Outputs a watch method for haml to stdout
-  watchn -t expresso          Outputs a watch method for expresso to stdout
-  watchn -t docco             Outputs a watch method for docco to stdout
+  watchn -r .watchn           Generates a default runner file named ".watchn"
   watchn -l                   Lists available templates for various libraries
+  watchn -t coffee            Outputs a watch method for coffeescript to stdout
+  watchn -t docco             Outputs a watch method for docco to stdout
+  watchn -t expresso          Outputs a watch method for expresso to stdout
+  watchn -t generic           Outputs a watch method for generic tasks to stdout
+  watchn -t haml              Outputs a watch method for haml to stdout
+  watchn -t jade              Outputs a watch method for jade to stdout
+  watchn -t jasmine           Outputs a watch method for jasmine-node to stdout
+  watchn -t jasmine_dom       Outputs a watch method for jasmine-dom to stdout
+  watchn -t jshint            Outputs a watch method for jshint to stdout
+  watchn -t sass              Outputs a watch method for sass to stdout
+  watchn -t scss              Outputs a watch method for scss to stdout
+  watchn -t stylus            Outputs a watch method for stylus to stdout
+  watchn -t uglify            Outputs a watch method for uglify to stdout
+
