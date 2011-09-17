@@ -22,7 +22,7 @@ jshint:
 	@jshint examples/javascripts/src/
 
 vows:
-	@echo Not yet completed!
+	@vows examples/vows/vows-test.js
 
 scss:
 	@sass examples/scss/style.scss > examples/scss/style.css
@@ -59,5 +59,5 @@ publish: coverage docs
 noop:
 
 
-.PHONY: test coverage watchn coffee jasmine jasmine_dom jshint vows scss sass haml stylus jade markdown uglify docs publish noop
+.PHONY: test coverage watchn coffee jasmine jasmine_dom jshint vows scss sass haml stylus jade markdown text uglify docs publish noop
 

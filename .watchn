@@ -6,6 +6,7 @@ var mkdwn = './examples/markdown/'
 var coffee = './examples/coffeescript/'
 var jasmine = './examples/jasmine/'
 var dom = './examples/jasmine-dom/'
+var vows = './examples/vows/'
 var scss = './examples/scss/'
 var sass = './examples/sass/'
 var haml = './examples/haml/'
@@ -16,7 +17,7 @@ var js = './examples/javascripts/src'
 module.exports.init = function(watchn) {
 
   // uses the default reporter
-  watchn.xwatch('markdown', [mkdwn], function(options) {
+  watchn.watch('markdown', [mkdwn], function(options) {
     // execute(task, options, reporter type, growl on pass, growl on fail
     watchn.execute('make markdown', options, 'reporter', false, true)
   })
@@ -43,6 +44,10 @@ module.exports.init = function(watchn) {
 
   watchn.watch('jasmine_dom', [dom], function(options) {
     watchn.execute('make jasmine_dom', options, 'jasmine_dom', false, true)
+  })
+
+  watchn.xwatch('vows', [vows], function(options) {
+    watchn.execute('make vows', options, 'vows', true, true)
   })
 
   watchn.watch('jshint', [js], function(options) {
