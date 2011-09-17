@@ -33,4 +33,5 @@ Examples:
   watchn -t scss              Outputs a watch method for scss to stdout
   watchn -t stylus            Outputs a watch method for stylus to stdout
   watchn -t uglify            Outputs a watch method for uglify to stdout
+  watchn -t vows              Outputs a watch method for vows to stdout
 
