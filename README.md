@@ -13,7 +13,7 @@ Intelligently and continuously auto execute tasks on file/directory changes. Lan
 
 ## More Meat
 
-watchn aims to automate the repetitive tasks developers run throughout the day. Tasks such as running tests, generating documentation, concatenating and minifying files. You know all those tasks we hammer together inside a `Makefile`, `Rakefile`, `Cakefile`, `Jakefile` or even `Ant` (_cringe_) tasks. In fact hooking into these files is exactly what it's designed for. watchn is really an elaborate file/directory watcher and directs it's notifications into callbacks defined by the User. watchn is built to run in the background so you can write your code and don't have to leave your current window to run the build scripts or tests. watchn can be as quiet or as loud as you want it to be. It's really up to the user to define what your preference is and what watchn executes on.
+watchn aims to automate the repetitive tasks developers run throughout the day. Tasks such as running tests, generating documentation, concatenating and minifying files. You know all those tasks we hammer together inside a `Makefile`, `Rakefile`, `Cakefile`, `Jakefile` or even `Ant` (_cringe_) tasks. In fact hooking into these files is exactly what it's designed for. watchn is really an elaborate file/directory watcher and directs it's notifications into callbacks defined by the user. watchn is built to run in the background so you can write your code and don't have to leave your current window to run the build scripts or tests. watchn can be as quiet or as loud as you want it to be. It's really up to the user to define what your preference is and what watchn executes on.
 
 watchn can associate a file change in a single directory and execute multiple tasks. Say you code your application in [CoffeeScript][coffee] and it's stored in `lib/src` and say you've put a couple of watchers on the `lib` directory for compiling [CoffeeScript][coffee], running your tests, generating documentation and concatenating and minifying the output. Saving a [CoffeeScript][coffee] file will trigger all of these tasks and you can get immediate feedback on the status of their results. 
 
@@ -206,21 +206,16 @@ watchn packs up some helper methods for you. It can generate a default `.watchn`
 
 ## Todo
 
-### Reporters Branch
-
-- Cleanup Documentation and README (links!)
-  - Simpler startup at the top
-  - Review all links
+- Document reporters files and get into docco
 - Merge to master
+- GH Pages update
 - `npm publish`
-
-
 - Utility method for finding files based on filetype for watchn
 - Figure out how to broadcast a message when watchn crashes
 - Test for [growl][growl] executable?
 - Growl Colors?
 - Growl Icon
-- GH Pages update
+- GH Pages site
 - Peer review
 
 
