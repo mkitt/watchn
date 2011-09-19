@@ -206,9 +206,6 @@ watchn packs up some helper methods for you. It can generate a default `.watchn`
 
 ## Todo
 
-- Merge to master
-- GH Pages update
-- `npm publish`
 - Utility method for finding files based on filetype for watchn
 - Figure out how to broadcast a message when watchn crashes
 - Test for [growl][growl] executable?
