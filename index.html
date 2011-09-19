@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,10 +16,11 @@
     #container {
       font-size: 14px;
       margin: 0 auto;
-      width: 800px;
+      width: 850px;
     }
     h1 { font-size: 3.8em; color: #333; margin-bottom: 3px; }
     a { color: #268BD2; }
+    code {font-size: .9em;}
   </style>
 </head>
 
@@ -27,24 +29,27 @@
 
   <div id="container">
     <h1>watchn</h1>
-    <p>Intelligently and continuously auto execute tasks on file/directory changes. File watching on steroids.</p>
-    <p>Watchn aims to automate the repetitive tasks developers run throughout the day. Tasks such as running tests, generating documentation, concatenating and minifying files. You know all those tasks we hammer together inside a Makefile, Rakefile, Jakefile or even Ant (cringe) tasks. In fact hooking into these files is exactly what it's designed for. Watchn is really an elaborate file/directory watcher and directs it's notifications into callbacks defined by the User. Watchn is designed to run in the background so you can write your code and don't have to leave your current window to run the build scripts or tests. Watchn can be as quiet or as loud as you want it to be. It's really up to the User to define what your preference is and what watchn executes on.</p>
-    <p>Watchn does some fancy code reloading, so it knows when you add a file/directory, remove a file/directory, or even update the runner file you've setup to hook into your tasks.</p>
-
+    <p>Intelligently and continuously auto execute tasks on file/directory changes. Language, framework and library agnostic.</p>
     <br />
-    <p>To install:</p>
-    <pre>npm install watchn -g</pre>
+    <h2>Description</h2>
+    <p>watchn aims to automate the repetitive tasks developers run throughout the day. Tasks such as running tests, generating documentation, concatenating and minifying files. You know all those tasks we hammer together inside a <code>Makefile</code>, <code>Rakefile</code>, <code>Cakefile</code>, <code>Jakefile</code> or even <code>Ant</code> (<em>cringe</em>) tasks. In fact hooking into these files is exactly what it's designed for. watchn is really an elaborate file/directory watcher and directs it's notifications into callbacks defined by the user. watchn is built to run in the background so you can write your code and don't have to leave your current window to run the build scripts or tests. watchn can be as quiet or as loud as you want it to be. It's really up to the user to define what your preference is and what watchn executes on.</p>
+    <p>watchn can associate a file change in a single directory and execute multiple tasks. Say you code your application in <a href="http://jashkenas.github.com/coffee-script/">CoffeeScript</a> and it's stored in <code>lib/src</code> and say you've put a couple of watchers on the <code>lib</code> directory for compiling <a href="http://jashkenas.github.com/coffee-script/">CoffeeScript</a>, running your tests, generating documentation and concatenating and minifying the output. Saving a <a href="http://jashkenas.github.com/coffee-script/">CoffeeScript</a> file will trigger all of these tasks and you can get immediate feedback on the status of their results.</p>
+    <p>watchn also does some fancy code reloading, so it knows when you add a file/directory, remove a file/directory, or even update the runner file you've setup to hook into your tasks.</p>
+    <p>Why use this over the built in watchers that come with most libraries? Generally if you are using various libraries together (say, <a href="http://sass-lang.com/">SCSS</a>, <a href="http://jashkenas.github.com/coffee-script/">CoffeeScript</a>, <a href="https://github.com/mhevery/jasmine-node/">Jasmine</a>, etc..) you most likely would have numerous watcher's activated, generating various output in multiple windows or background tasks. watchn combines these into one single watcher and is ready to yell at you if you get it wrong or pat you on the back when your tasks run successfully.</p>
     <br />
-    <p>For more information, <a href="http://github.com/mkitt/watchn">see the project readme</a>.</p>
-    <br />
-    <p>See the annotated source for more information about watchn's javascript files:</p>
-    <a href="watchn.html">watchn.js docs</a>
-    <br />
-    <a href="map.html">map.js docs</a>
+    <h2>Get Started</h2>
+    <pre>
+npm install watchn -g
+cd workspace/project
+watchn runner .watchn
+watchn .watchn
+    </pre>
+    <h2>More Information</h2>
+    <p><a href="http://github.com/mkitt/watchn">See the project readme</a> for full details.</p>
+    <p>See the <a href="watchn.html">annotated source</a> for more information about watchn's javascript files:</p>
   </div>
 
 </body>
 </html>
-
 
 
