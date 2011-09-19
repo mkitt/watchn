@@ -1,10 +1,11 @@
 {
     "name": "watchn"
-  , "version": "0.1.0"
+  , "version": "0.1.1"
   , "description": "Intelligently auto execute tasks on file/directory changes"
-  , "keywords": ["development tool", "watch", "notify", "dev", "development"]
+  , "keywords": ["development tool", "watch", "notify", "dev", "development", "reporter", "test"]
   , "author": "Matthew Kitt <mk.kitt@gmail.com> (http://mkitt.net/)"
   , "homepage": "http://github.com/mkitt/watchn"
+  , "preferGlobal": true
   , "repository": { "type" : "git", "url" : "http://github.com/mkitt/watchn.git" }
   , "dependencies": {}
   , "bin": { "watchn": "./bin/watchn" }
