@@ -206,7 +206,6 @@ watchn packs up some helper methods for you. It can generate a default `.watchn`
 
 ## Todo
 
-- Document reporters files and get into docco
 - Merge to master
 - GH Pages update
 - `npm publish`
@@ -237,7 +236,7 @@ Please do. watchn is in active development and encourages additions, changes and
 [.watchn]: https://github.com/mkitt/watchn/blob/master/.watchn
 [license]: https://github.com/mkitt/watchn/blob/master/LICENSE.md
 [custom]: https://github.com/mkitt/watchn/blob/master/examples/custom-reporter/custom_reporter.js
-[annotated]: http://mkitt.github.com/watchn/watchn.html
+[annotated]: http://mkitt.github.com/watchn/
 [docco]: http://jashkenas.github.com/docco/
 [uglify]: https://github.com/mishoo/UglifyJS
 [expresso]: http://visionmedia.github.com/expresso/
