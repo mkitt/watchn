@@ -52,7 +52,7 @@ uglify:
 	@uglifyjs -v -o examples/javascripts/app.min.js examples/javascripts/app.js
 
 docs:
-	@docco lib/*.js
+	@docco lib/*.js lib/reporters/*.js
 
 publish: coverage docs
 
