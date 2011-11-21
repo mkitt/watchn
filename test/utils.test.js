@@ -1,5 +1,5 @@
 
-var utils = require('utils')
+var utils = require('../lib/utils')
 var assert = require('assert')
 var path = require('path')
 var fixtures = path.normalize('./test/fixtures/')

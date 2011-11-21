@@ -1,15 +1,33 @@
 {
-    "name": "watchn"
-  , "version": "0.1.1"
-  , "description": "Intelligently auto execute tasks on file/directory changes"
-  , "keywords": ["development tool", "watch", "notify", "dev", "development", "reporter", "test"]
-  , "author": "Matthew Kitt <mk.kitt@gmail.com> (http://mkitt.net/)"
-  , "homepage": "http://github.com/mkitt/watchn"
-  , "preferGlobal": true
-  , "repository": { "type" : "git", "url" : "http://github.com/mkitt/watchn.git" }
-  , "dependencies": {}
-  , "bin": { "watchn": "./bin/watchn" }
-  , "main": "index"
-  , "engines": { "node": "0.4.x" }
+  "name": "watchn",
+  "version": "0.1.1",
+  "description": "Intelligently auto execute tasks on file/directory changes",
+  "keywords": [
+    "development tool",
+    "watch",
+    "notify",
+    "dev",
+    "development",
+    "reporter",
+    "test"
+  ],
+  "author": "Matthew Kitt <mk.kitt@gmail.com> (http://mkitt.net/)",
+  "homepage": "http://github.com/mkitt/watchn",
+  "preferGlobal": true,
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mkitt/watchn.git"
+  },
+  "dependencies": {},
+  "bin": {
+    "watchn": "./bin/watchn"
+  },
+  "main": "index",
+  "engines": {
+    "node": "0.6.x"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "make"
+  }
 }
-

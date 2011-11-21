@@ -1,6 +1,6 @@
 
 var assert = require('assert')
-var JSHintReporter = require('reporters/jshint_reporter')
+var JSHintReporter = require('../../lib/reporters/jshint_reporter')
 var reporter
 
 function before() {

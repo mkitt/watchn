@@ -1,6 +1,6 @@
 
 var assert = require('assert')
-var CoffeeReporter = require('reporters/coffee_reporter')
+var CoffeeReporter = require('../../lib/reporters/coffee_reporter')
 var reporter
 
 function before() {

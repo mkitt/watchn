@@ -3,8 +3,8 @@ var fs = require('fs')
 var assert = require('assert')
 var path = require('path')
 var exec = require('child_process').exec
-var utils = require('utils')
-var Watchn = require('watchn')
+var utils = require('../lib/utils')
+var Watchn = require('../lib/watchn')
 var watchn
 var fixtures = path.normalize('./test/fixtures/')
 
