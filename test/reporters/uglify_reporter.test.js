@@ -1,6 +1,6 @@
 
 var assert = require('assert')
-var UglifyReporter = require('reporters/uglify_reporter')
+var UglifyReporter = require('../../lib/reporters/uglify_reporter')
 var reporter
 
 function before() {

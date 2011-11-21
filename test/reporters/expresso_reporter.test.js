@@ -1,6 +1,6 @@
 
 var assert = require('assert')
-var ExpressoReporter = require('reporters/expresso_reporter')
+var ExpressoReporter = require('../../lib/reporters/expresso_reporter')
 var reporter
 
 function before() {

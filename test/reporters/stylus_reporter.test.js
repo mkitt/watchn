@@ -1,6 +1,6 @@
 
 var assert = require('assert')
-var StylusReporter = require('reporters/stylus_reporter')
+var StylusReporter = require('../../lib/reporters/stylus_reporter')
 var reporter
 
 function before() {
