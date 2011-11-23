@@ -1,5 +1,5 @@
 
-var Map = require('map')
+var Map = require('../lib/map')
 var assert = require('assert')
 var map
 

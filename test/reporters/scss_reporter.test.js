@@ -1,6 +1,6 @@
 
 var assert = require('assert')
-var SCSSReporter = require('reporters/scss_reporter')
+var SCSSReporter = require('../../lib/reporters/scss_reporter')
 var reporter
 
 function before() {

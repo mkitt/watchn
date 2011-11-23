@@ -1,6 +1,6 @@
 
 var assert = require('assert')
-var JadeReporter = require('reporters/jade_reporter')
+var JadeReporter = require('../../lib/reporters/jade_reporter')
 var reporter
 
 function before() {
