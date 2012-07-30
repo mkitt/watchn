@@ -208,11 +208,14 @@ watchn packs up some helper methods for you. It can generate a default `.watchn`
 
 - Utility method for finding files based on filetype for watchn
 - Figure out how to broadcast a message when watchn crashes
-- Test for [growl][growl] executable?
-- Growl Colors?
-- Growl Icon
+- Remove [growl][growl]
 - GH Pages site
 - Peer review
+- Upgrade to new node version
+- Add compass to the reporters?
+- Test out mocha
+- Add travis CI
+- Finish notes
 
 
 ## Inspiration
